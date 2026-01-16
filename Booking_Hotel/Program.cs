@@ -1,3 +1,6 @@
+using Booking_Hotel.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace Booking_Hotel
 {
     public class Program
@@ -8,7 +11,11 @@ namespace Booking_Hotel
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(
+            builder.Configuration.GetConnectionString("DefaultConnection")
+         )
+);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
