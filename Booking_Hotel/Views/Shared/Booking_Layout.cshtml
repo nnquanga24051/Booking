@@ -20,25 +20,41 @@
                 <a class="text-white me-3" href="/Home/Booking">Booking</a>
                 <a class="text-white me-3" href="/Home/About">About</a>
                 <a class="text-white me-3" href="/Home/Contact">Contact</a>
-                <a class="btn btn-outline-light btn-sm"
-                   asp-controller="Authentications"
-                   asp-action="Login">
-                    Login
-                </a>
-                <a class="btn btn-outline-light btn-sm"
-                   asp-controller="Authentications"
-                   asp-action="Register">
-                    Register
-                </a>
-
+                <a class="btn btn-outline-light btn-sm" href="/Account/Login">Login</a>
             </nav>
         </div>
 
-         
+
+        <div class="d-flex">
+            <!-- SIDEBAR -->
+            <div class="item sidebar">
+                <h5>🏢 Branch</h5>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item">Hà Nội</li>
+                    <li class="list-group-item">Hồ Chí Minh</li>
+                    <li class="list-group-item">Đà Nẵng</li>
+                </ul>
+
+                <h5>📅 Date</h5>
+                <div class="mb-2">
+                    <label>Check-in</label>
+                    <input type="date" class="form-control" />
+                </div>
+
+                <div class="mb-2">
+                    <label>Check-out</label>
+                    <input type="date" class="form-control" />
+                </div>
+
+                <button class="btn btn-primary w-100 mt-2">
+                    Search Room
+                </button>
+            </div>
 
 
             <!-- CONTENT -->
             <div class="item content flex-grow-1">
+
                 @RenderBody()
             </div>
         </div>
@@ -47,7 +63,7 @@
         <div class="item footer text-center">
             © 2026 Booking Hotel | Contact: booking@gmail.com
         </div>
-     
+        <p>Quang</p>
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
