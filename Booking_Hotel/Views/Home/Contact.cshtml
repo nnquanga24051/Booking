@@ -1,7 +1,242 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     ViewData["Title"] = "Contact";
-    <h1>Contact Page</h1>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/contact.css" asp-append-version="true" />
+}
+
+<section class="contact-hero">
+    <div class="contact-hero-overlay"></div>
+    <div class="contact-hero-content">
+        <h1 class="contact-hero-title">Liên Hệ Với Chúng Tôi</h1>
+        <p class="contact-hero-subtitle">Chúng tôi luôn sẵn sàng hỗ trợ bạn 24/7</p>
+    </div>
+</section>
+
+<section class="contact-info-section">
+    <div class="container">
+        <div class="contact-info-grid">
+            <div class="contact-info-card">
+                <div class="info-icon">📞</div>
+                <h3 class="info-title">Điện Thoại</h3>
+                <p class="info-content">+84 123 456 789</p>
+                <p class="info-content">+84 987 654 321</p>
+                <p class="info-subtitle">Hỗ trợ 24/7</p>
+            </div>
+
+            <div class="contact-info-card">
+                <div class="info-icon">📧</div>
+                <h3 class="info-title">Email</h3>
+                <p class="info-content">booking@gmail.com</p>
+                <p class="info-content">support@bookinghotel.vn</p>
+                <p class="info-subtitle">Phản hồi trong 24h</p>
+            </div>
+
+            <div class="contact-info-card">
+                <div class="info-icon">📍</div>
+                <h3 class="info-title">Địa Chỉ</h3>
+                <p class="info-content">Cần Thơ, Việt Nam</p>
+                <p class="info-content">3 chi nhánh toàn quốc</p>
+                <p class="info-subtitle">Mở cửa 24/7</p>
+            </div>
+
+            <div class="contact-info-card">
+                <div class="info-icon">🕐</div>
+                <h3 class="info-title">Giờ Làm Việc</h3>
+                <p class="info-content">Thứ 2 - Chủ nhật</p>
+                <p class="info-content">24 giờ mỗi ngày</p>
+                <p class="info-subtitle">Không ngừng nghỉ</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="contact-form-section">
+    <div class="container">
+        <div class="contact-layout">
+            <div class="form-column">
+                <h2 class="section-title">Gửi Tin Nhắn Cho Chúng Tôi</h2>
+                <p class="section-description">
+                    Điền thông tin vào form bên dưới và chúng tôi sẽ phản hồi trong thời gian sớm nhất.
+                </p>
+
+                <form class="contact-form" id="contactForm" method="post" action="/Home/Contact">
+                    <div class="form-row-2">
+                        <div class="form-field">
+                            <label for="fullName" class="field-label">Họ và Tên *</label>
+                            <input type="text"
+                                   id="fullName"
+                                   name="fullName"
+                                   class="field-input"
+                                   placeholder="Nguyễn Văn A"
+                                   required />
+                        </div>
+
+                        <div class="form-field">
+                            <label for="email" class="field-label">Email *</label>
+                            <input type="email"
+                                   id="email"
+                                   name="email"
+                                   class="field-input"
+                                   placeholder="email@example.com"
+                                   required />
+                        </div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-field">
+                            <label for="phone" class="field-label">Số Điện Thoại *</label>
+                            <input type="tel"
+                                   id="phone"
+                                   name="phone"
+                                   class="field-input"
+                                   placeholder="0123456789"
+                                   required />
+                        </div>
+
+                        <div class="form-field">
+                            <label for="subject" class="field-label">Chủ Đề</label>
+                            <select id="subject" name="subject" class="field-input">
+                                <option value="">Chọn chủ đề</option>
+                                <option value="booking">Đặt phòng</option>
+                                <option value="support">Hỗ trợ kỹ thuật</option>
+                                <option value="feedback">Góp ý</option>
+                                <option value="complaint">Khiếu nại</option>
+                                <option value="other">Khác</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="message" class="field-label">Tin Nhắn *</label>
+                        <textarea id="message"
+                                  name="message"
+                                  class="field-textarea"
+                                  rows="6"
+                                  placeholder="Nhập nội dung tin nhắn của bạn..."
+                                  required></textarea>
+                    </div>
+
+                    <div class="form-field">
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="newsletter" />
+                            <span class="checkbox-text">Đăng ký nhận thông tin khuyến mãi từ Booking Hotel</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        📤 Gửi Tin Nhắn
+                    </button>
+
+                    <div class="form-message" id="formMessage"></div>
+                </form>
+            </div>
+
+            <div class="info-column">
+                <div class="info-box">
+                    <h3 class="info-box-title">💬 Hỗ Trợ Trực Tuyến</h3>
+                    <p class="info-box-text">
+                        Bạn cần hỗ trợ ngay? Hãy chat trực tiếp với đội ngũ tư vấn của chúng tôi!
+                    </p>
+                    <button class="chat-btn">
+                        💬 Chat Ngay
+                    </button>
+                </div>
+
+                <div class="info-box">
+                    <h3 class="info-box-title">📱 Mạng Xã Hội</h3>
+                    <p class="info-box-text">
+                        Kết nối với chúng tôi trên các nền tảng mạng xã hội để cập nhật tin tức mới nhất.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-btn facebook">📘 Facebook</a>
+                        <a href="#" class="social-btn instagram">📷 Instagram</a>
+                        <a href="#" class="social-btn twitter">🐦 Twitter</a>
+                        <a href="#" class="social-btn youtube">📺 YouTube</a>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3 class="info-box-title">❓ Câu Hỏi Thường Gặp</h3>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question">Làm thế nào để đặt phòng?</div>
+                            <div class="faq-answer">
+                                Bạn có thể đặt phòng trực tuyến qua website hoặc gọi điện đến hotline của chúng tôi.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Chính sách hủy phòng?</div>
+                            <div class="faq-answer">
+                                Miễn phí hủy phòng trước 24h. Sau thời gian này sẽ tính phí theo quy định.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Giờ nhận/trả phòng?</div>
+                            <div class="faq-answer">
+                                Check-in: 14:00 | Check-out: 12:00. Có thể sắp xếp linh hoạt theo yêu cầu.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="map-section">
+    <div class="container">
+        <h2 class="section-title center">Vị Trí Chi Nhánh</h2>
+        <div class="branches-map-grid">
+            <div class="map-card">
+                <div class="map-header">
+                    <h3 class="map-title">🏨 Chi Nhánh Cần Thơ</h3>
+                    <p class="map-address">📍 123 Đường 3/2, Ninh Kiều, Cần Thơ</p>
+                </div>
+                <div class="map-placeholder">
+                    <div class="map-icon">🗺️</div>
+                    <p>Bản đồ chi nhánh Cần Thơ</p>
+                </div>
+                <div class="map-footer">
+                    <a href="tel:+84123456789" class="map-contact-btn">📞 Gọi Ngay</a>
+                    <a href="#" class="map-direction-btn">📍 Chỉ Đường</a>
+                </div>
+            </div>
+
+            <div class="map-card">
+                <div class="map-header">
+                    <h3 class="map-title">🏨 Chi Nhánh TP.HCM</h3>
+                    <p class="map-address">📍 456 Nguyễn Huệ, Quận 1, TP.HCM</p>
+                </div>
+                <div class="map-placeholder">
+                    <div class="map-icon">🗺️</div>
+                    <p>Bản đồ chi nhánh TP.HCM</p>
+                </div>
+                <div class="map-footer">
+                    <a href="tel:+84123456788" class="map-contact-btn">📞 Gọi Ngay</a>
+                    <a href="#" class="map-direction-btn">📍 Chỉ Đường</a>
+                </div>
+            </div>
+
+            <div class="map-card">
+                <div class="map-header">
+                    <h3 class="map-title">🏨 Chi Nhánh Hà Nội</h3>
+                    <p class="map-address">📍 789 Hoàn Kiếm, Hà Nội</p>
+                </div>
+                <div class="map-placeholder">
+                    <div class="map-icon">🗺️</div>
+                    <p>Bản đồ chi nhánh Hà Nội</p>
+                </div>
+                <div class="map-footer">
+                    <a href="tel:+84123456787" class="map-contact-btn">📞 Gọi Ngay</a>
+                    <a href="#" class="map-direction-btn">📍 Chỉ Đường</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/contact.js" asp-append-version="true"></script>
 }

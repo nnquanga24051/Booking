@@ -1,0 +1,135 @@
+﻿@{
+    ViewData["Title"] = "Quản Lý Chi Nhánh";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin-table.css" asp-append-version="true" />
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <div class="header-left">
+            <h1 class="page-title">🏢 Quản Lý Chi Nhánh</h1>
+            <p class="page-subtitle">Quản lý tất cả chi nhánh trong hệ thống</p>
+        </div>
+        <div class="header-right">
+            <button class="btn-primary" onclick="openAddBranchModal()">
+                ➕ Thêm Chi Nhánh
+            </button>
+        </div>
+    </div>
+
+    <div class="branches-grid">
+        <div class="branch-card-admin">
+            <div class="branch-header">
+                <div class="branch-icon-large">📍</div>
+                <div class="branch-badge active">Hoạt động</div>
+            </div>
+            <div class="branch-body">
+                <h3 class="branch-title">Chi Nhánh Cần Thơ</h3>
+                <p class="branch-desc">Khách sạn trung tâm Cần Thơ</p>
+                <div class="branch-stats">
+                    <div class="stat">
+                        <span class="stat-icon">🏨</span>
+                        <span class="stat-text">20 phòng</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">📅</span>
+                        <span class="stat-text">15 đặt phòng</span>
+                    </div>
+                </div>
+                <div class="branch-date">Tạo: 01/01/2026</div>
+            </div>
+            <div class="branch-footer">
+                <button class="btn-action edit" onclick="editBranch(1)">✏️ Sửa</button>
+                <button class="btn-action delete" onclick="deleteBranch(1)">🗑️ Xóa</button>
+            </div>
+        </div>
+
+        <div class="branch-card-admin">
+            <div class="branch-header">
+                <div class="branch-icon-large">📍</div>
+                <div class="branch-badge active">Hoạt động</div>
+            </div>
+            <div class="branch-body">
+                <h3 class="branch-title">Chi Nhánh TP.HCM</h3>
+                <p class="branch-desc">Khách sạn Quận 1</p>
+                <div class="branch-stats">
+                    <div class="stat">
+                        <span class="stat-icon">🏨</span>
+                        <span class="stat-text">25 phòng</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">📅</span>
+                        <span class="stat-text">20 đặt phòng</span>
+                    </div>
+                </div>
+                <div class="branch-date">Tạo: 01/01/2026</div>
+            </div>
+            <div class="branch-footer">
+                <button class="btn-action edit" onclick="editBranch(2)">✏️ Sửa</button>
+                <button class="btn-action delete" onclick="deleteBranch(2)">🗑️ Xóa</button>
+            </div>
+        </div>
+
+        <div class="branch-card-admin">
+            <div class="branch-header">
+                <div class="branch-icon-large">📍</div>
+                <div class="branch-badge active">Hoạt động</div>
+            </div>
+            <div class="branch-body">
+                <h3 class="branch-title">Chi Nhánh Hà Nội</h3>
+                <p class="branch-desc">Khách sạn khu vực Hồ Gươm</p>
+                <div class="branch-stats">
+                    <div class="stat">
+                        <span class="stat-icon">🏨</span>
+                        <span class="stat-text">30 phòng</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">📅</span>
+                        <span class="stat-text">25 đặt phòng</span>
+                    </div>
+                </div>
+                <div class="branch-date">Tạo: 01/01/2026</div>
+            </div>
+            <div class="branch-footer">
+                <button class="btn-action edit" onclick="editBranch(3)">✏️ Sửa</button>
+                <button class="btn-action delete" onclick="deleteBranch(3)">🗑️ Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="branchModal">
+    <div class="modal-overlay" onclick="closeBranchModal()"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle">➕ Thêm Chi Nhánh Mới</h3>
+            <button class="modal-close" onclick="closeBranchModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <form id="branchForm">
+                <input type="hidden" id="branchId" />
+
+                <div class="form-group">
+                    <label>Tên Chi Nhánh *</label>
+                    <input type="text" id="branchName" class="form-control" required placeholder="Chi nhánh..." />
+                </div>
+
+                <div class="form-group">
+                    <label>Mô Tả</label>
+                    <textarea id="branchDescription" class="form-control" rows="4" placeholder="Mô tả về chi nhánh..."></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-secondary" onclick="closeBranchModal()">Hủy</button>
+            <button class="btn-primary" onclick="saveBranch()">Lưu</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/admin-branches.js" asp-append-version="true"></script>
+}

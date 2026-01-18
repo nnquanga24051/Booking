@@ -1,37 +1,39 @@
 ﻿@using Microsoft.AspNetCore.Http
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Booking_Hotel</title>
+    <title>@ViewData["Title"] - Booking Hotel</title>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Booking_Hotel.styles.css" asp-append-version="true" />
+
+    @* Render additional styles from pages *@
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <div class="container-fluid p-0">
-        <!-- HEADER -->
-        <div class="item header d-flex justify-content-between align-items-center px-4">
-            <h4 class="mb-0">🏨 Booking Hotel</h4>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>🏨 Booking Hotel</h1>
+            </div>
 
-            <nav>
-                <a class="text-white me-3" href="/">Home</a>
-                <a class="text-white me-3" href="/Home/Booking">Booking</a>
-                <a class="text-white me-3" href="/Home/About">About</a>
-                <a class="text-white me-3" href="/Home/Contact">Contact</a>
-                @* <a class="btn btn-outline-light btn-sm"
-                   asp-controller="Authentications"
-                   asp-action="Login">
-                    Login
-                </a>
-                <a class="btn btn-outline-light btn-sm"
-                   asp-controller="Authentications"
-                   asp-action="Register">
-                    Register
-                </a> *@
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="main-nav" id="mainNav">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/Home/Booking" class="nav-link">Booking</a>
+                <a href="/Home/About" class="nav-link">About</a>
+                <a href="/Home/Contact" class="nav-link">Contact</a>
+
                 @{
                     var userId = Context.Session.GetInt32("UserId");
                     var username = Context.Session.GetString("Username");
@@ -41,76 +43,132 @@
 
                 @if (userId == null)
                 {
-                    <!-- CHƯA ĐĂNG NHẬP -->
-                    <a class="btn btn-outline-light btn-sm me-2"
-                       asp-controller="Authentications"
-                       asp-action="Login">
-                        Login
-                    </a>
-                    <a class="btn btn-outline-light btn-sm"
-                       asp-controller="Authentications"
-                       asp-action="Register">
-                        Register
-                    </a>
+                    <div class="auth-buttons">
+                        <a class="btn btn-outline"
+                           asp-controller="Authentications"
+                           asp-action="Login">
+                            Login
+                        </a>
+                        <a class="btn btn-primary"
+                           asp-controller="Authentications"
+                           asp-action="Register">
+                            Register
+                        </a>
+                    </div>
                 }
                 else
                 {
-                    <!-- ĐÃ ĐĂNG NHẬP -->
-                    <div class="dropdown d-inline-block">
-                        <a class="text-white dropdown-toggle"
-                           href="#"
-                           id="userDropdown"
-                           role="button"
-                           data-bs-toggle="dropdown"
-                           aria-expanded="false">
-                            👤 @username
-                        </a>
+                    <div class="user-menu">
+                        <button class="user-button" id="userButton">
+                            <span class="user-icon">👤</span>
+                            <span class="username">@username</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </button>
 
-                        <ul class="dropdown-menu dropdown-menu-end p-3"
-                            aria-labelledby="userDropdown"
-                            style="min-width: 250px;">
-                            <li class="mb-2">
-                                <strong>@username</strong><br />
-                                <small class="text-muted">@email</small>
-                            </li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li class="mb-2">
-                                <strong>@fullName</strong><br />
-                                <small class="text-muted">@email</small>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item text-danger"
-                                   asp-controller="Authentications"
-                                   asp-action="Logout">
-                                    Logout
-                                </a>
-                            </li>
-                        </ul>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="user-info">
+                                <strong>@username</strong>
+                                <small>@email</small>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="user-details">
+                                <strong>@fullName</strong>
+                                <small>@email</small>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-link logout"
+                               asp-controller="Authentications"
+                               asp-action="Logout">
+                                Logout
+                            </a>
+                        </div>
                     </div>
                 }
             </nav>
         </div>
+    </header>
 
-         
+    <!-- CONTENT -->
+    <main class="main-content">
+        @RenderBody()
+    </main>
 
+    @* <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <!-- About Section -->
+                <div class="footer-section">
+                    <h3>🏨 Booking Hotel</h3>
+                    <p>
+                        Your trusted partner for finding and booking the perfect accommodation.
+                        We offer the best hotels at competitive prices with exceptional service.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">📘</a>
+                        <a href="#" class="social-link" aria-label="Instagram">📷</a>
+                        <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+                        <a href="#" class="social-link" aria-label="YouTube">📺</a>
+                    </div>
+                </div>
 
-            <!-- CONTENT -->
-            <div class="item content flex-grow-1">
-                @RenderBody()
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/"><span class="footer-icon">🏠</span>Home</a></li>
+                        <li><a href="/Home/Booking"><span class="footer-icon">📅</span>Book Now</a></li>
+                        <li><a href="/Home/About"><span class="footer-icon">ℹ️</span>About Us</a></li>
+                        <li><a href="/Home/Contact"><span class="footer-icon">📧</span>Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div class="footer-section">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><a href="#"><span class="footer-icon">⭐</span>Luxury Hotels</a></li>
+                        <li><a href="#"><span class="footer-icon">💼</span>Business Hotels</a></li>
+                        <li><a href="#"><span class="footer-icon">🏖️</span>Resort & Spa</a></li>
+                        <li><a href="#"><span class="footer-icon">✈️</span>Travel Packages</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>
+                            <span class="footer-icon">📧</span>
+                            <span>booking@gmail.com</span>
+                        </li>
+                        <li>
+                            <span class="footer-icon">📞</span>
+                            <span>+84 123 456 789</span>
+                        </li>
+                        <li>
+                            <span class="footer-icon">📍</span>
+                            <span>Cần Thơ, Vietnam</span>
+                        </li>
+                        <li>
+                            <span class="footer-icon">🕐</span>
+                            <span>24/7 Support</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 Booking Hotel. All Rights Reserved. | Designed with ❤️ for travelers</p>
             </div>
         </div>
-
-        <!-- FOOTER -->
-        <div class="item footer text-center">
-            © 2026 Booking Hotel | Contact: booking@gmail.com
-        </div>
-     
-    </div>
+    </footer> *@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/layout.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @* Render additional scripts from pages *@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

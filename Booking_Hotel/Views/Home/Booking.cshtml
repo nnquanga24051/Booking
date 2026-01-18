@@ -1,7 +1,306 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     ViewData["Title"] = "Booking";
-    <h1>Booking Page</h1>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/booking.css" asp-append-version="true" />
+}
+
+<section class="booking-hero">
+    <div class="booking-hero-overlay"></div>
+    <div class="booking-hero-content">
+        <h1 class="booking-hero-title">Đặt Phòng Khách Sạn</h1>
+        <p class="booking-hero-subtitle">Tìm và đặt phòng lý tưởng của bạn</p>
+    </div>
+</section>
+
+<section class="booking-container">
+    <div class="container">
+        <div class="booking-layout">
+            <aside class="filter-sidebar">
+                <div class="filter-card">
+                    <h3 class="filter-title">🔍 Bộ Lọc Tìm Kiếm</h3>
+
+                    <form id="filterForm" method="get">
+                        <div class="filter-group">
+                            <label class="filter-label">📍 Chi Nhánh</label>
+                            <select name="branch" class="filter-select">
+                                <option value="">Tất cả chi nhánh</option>
+                                <option value="1">Cần Thơ</option>
+                                <option value="2">TP. Hồ Chí Minh</option>
+                                <option value="3">Hà Nội</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label">🏨 Loại Phòng</label>
+                            <select name="roomType" class="filter-select">
+                                <option value="">Tất cả loại phòng</option>
+                                <option value="Standard">Standard - Tiêu chuẩn</option>
+                                <option value="Deluxe">Deluxe - Cao cấp</option>
+                                <option value="Suite">Suite - VIP</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label">📅 Ngày Nhận Phòng</label>
+                            <input type="date" name="checkin" class="filter-input" />
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label">📅 Ngày Trả Phòng</label>
+                            <input type="date" name="checkout" class="filter-input" />
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label">💰 Khoảng Giá (VNĐ)</label>
+                            <div class="price-inputs">
+                                <input type="number" name="minPrice" placeholder="Từ" class="filter-input" />
+                                <span class="price-separator">-</span>
+                                <input type="number" name="maxPrice" placeholder="Đến" class="filter-input" />
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label">📊 Trạng Thái</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="status" value="available" checked />
+                                    <span>Còn trống</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="status" value="maintenance" />
+                                    <span>Bảo trì</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="filter-actions">
+                            <button type="submit" class="filter-btn primary">
+                                🔍 Tìm Kiếm
+                            </button>
+                            <button type="reset" class="filter-btn secondary">
+                                🔄 Đặt Lại
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="info-card">
+                    <h4 class="info-title">💡 Thông Tin Hữu Ích</h4>
+                    <ul class="info-list">
+                        <li>✓ Miễn phí hủy phòng trước 24h</li>
+                        <li>✓ Thanh toán tại khách sạn</li>
+                        <li>✓ Hỗ trợ 24/7</li>
+                        <li>✓ Giá đã bao gồm thuế</li>
+                    </ul>
+                </div>
+            </aside>
+
+            <main class="rooms-section">
+                <div class="section-header-bar">
+                    <h2 class="section-title">Danh Sách Phòng</h2>
+                    <div class="sort-controls">
+                        <label for="sortBy">Sắp xếp:</label>
+                        <select id="sortBy" class="sort-select">
+                            <option value="default">Mặc định</option>
+                            <option value="price-asc">Giá: Thấp đến cao</option>
+                            <option value="price-desc">Giá: Cao đến thấp</option>
+                            <option value="name">Tên phòng</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="rooms-list">
+                    <div class="room-item">
+                        <div class="room-image-wrapper">
+                            <img src="/images/rooms/101.jpg"
+                                 alt="Phòng Standard 101"
+                                 onerror="this.src='https://via.placeholder.com/350x250/0066a1/ffffff?text=Phòng+101'"
+                                 class="room-image" />
+                            <span class="room-status available">Còn Trống</span>
+                        </div>
+                        <div class="room-details">
+                            <div class="room-header-section">
+                                <h3 class="room-title">Phòng Standard 101</h3>
+                                <span class="room-location">📍 Cần Thơ</span>
+                            </div>
+                            <p class="room-category">🏨 Standard - Tiêu Chuẩn</p>
+                            <p class="room-desc">Phòng tiêu chuẩn với đầy đủ tiện nghi, phù hợp cho du khách cá nhân và gia đình nhỏ</p>
+
+                            <div class="room-amenities">
+                                <span class="amenity">🛏️ 1 Giường đôi</span>
+                                <span class="amenity">📺 TV</span>
+                                <span class="amenity">❄️ Điều hòa</span>
+                                <span class="amenity">🚿 Phòng tắm</span>
+                            </div>
+
+                            <div class="room-bottom">
+                                <div class="room-pricing">
+                                    <span class="price-per-night">Giá/đêm:</span>
+                                    <span class="price-amount">500,000₫</span>
+                                </div>
+                                <a href="/Home/BookingDetails?roomId=1" class="booking-btn">
+                                    Đặt Phòng Ngay
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="room-item">
+                        <div class="room-image-wrapper">
+                            <img src="/images/rooms/102.jpg"
+                                 alt="Phòng Deluxe 102"
+                                 onerror="this.src='https://via.placeholder.com/350x250/0066a1/ffffff?text=Phòng+102'"
+                                 class="room-image" />
+                            <span class="room-status available">Còn Trống</span>
+                        </div>
+                        <div class="room-details">
+                            <div class="room-header-section">
+                                <h3 class="room-title">Phòng Deluxe 102</h3>
+                                <span class="room-location">📍 Cần Thơ</span>
+                            </div>
+                            <p class="room-category">⭐ Deluxe - Cao Cấp</p>
+                            <p class="room-desc">Phòng cao cấp với view đẹp, không gian rộng rãi và thoải mái</p>
+
+                            <div class="room-amenities">
+                                <span class="amenity">🛏️ 1 Giường King</span>
+                                <span class="amenity">📺 Smart TV</span>
+                                <span class="amenity">❄️ Điều hòa</span>
+                                <span class="amenity">🛁 Bồn tắm</span>
+                            </div>
+
+                            <div class="room-bottom">
+                                <div class="room-pricing">
+                                    <span class="price-per-night">Giá/đêm:</span>
+                                    <span class="price-amount">700,000₫</span>
+                                </div>
+                                <a href="/Home/BookingDetails?roomId=2" class="booking-btn">
+                                    Đặt Phòng Ngay
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="room-item">
+                        <div class="room-image-wrapper">
+                            <img src="/images/rooms/201.jpg"
+                                 alt="Phòng Standard 201"
+                                 onerror="this.src='https://via.placeholder.com/350x250/ff9800/ffffff?text=Bảo+Trì'"
+                                 class="room-image maintenance-img" />
+                            <span class="room-status maintenance">Bảo Trì</span>
+                        </div>
+                        <div class="room-details">
+                            <div class="room-header-section">
+                                <h3 class="room-title">Phòng Standard 201</h3>
+                                <span class="room-location">📍 TP.HCM</span>
+                            </div>
+                            <p class="room-category">🏨 Standard - Tiêu Chuẩn</p>
+                            <p class="room-desc">Đang trong quá trình bảo trì và nâng cấp tiện nghi</p>
+
+                            <div class="room-amenities">
+                                <span class="amenity">🛏️ 1 Giường đôi</span>
+                                <span class="amenity">📺 TV</span>
+                                <span class="amenity">❄️ Điều hòa</span>
+                                <span class="amenity">🚿 Phòng tắm</span>
+                            </div>
+
+                            <div class="room-bottom">
+                                <div class="room-pricing">
+                                    <span class="price-per-night">Giá/đêm:</span>
+                                    <span class="price-amount">600,000₫</span>
+                                </div>
+                                <button class="booking-btn disabled" disabled>
+                                    Không Khả Dụng
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="room-item">
+                        <div class="room-image-wrapper">
+                            <img src="/images/rooms/202.jpg"
+                                 alt="Phòng Deluxe 202"
+                                 onerror="this.src='https://via.placeholder.com/350x250/0066a1/ffffff?text=Phòng+202'"
+                                 class="room-image" />
+                            <span class="room-status available">Còn Trống</span>
+                        </div>
+                        <div class="room-details">
+                            <div class="room-header-section">
+                                <h3 class="room-title">Phòng Deluxe 202</h3>
+                                <span class="room-location">📍 TP.HCM</span>
+                            </div>
+                            <p class="room-category">⭐ Deluxe - Cao Cấp</p>
+                            <p class="room-desc">Phòng sang trọng tại trung tâm Quận 1 với đầy đủ tiện nghi</p>
+
+                            <div class="room-amenities">
+                                <span class="amenity">🛏️ 1 Giường King</span>
+                                <span class="amenity">📺 Smart TV</span>
+                                <span class="amenity">❄️ Điều hòa</span>
+                                <span class="amenity">🛁 Bồn tắm</span>
+                            </div>
+
+                            <div class="room-bottom">
+                                <div class="room-pricing">
+                                    <span class="price-per-night">Giá/đêm:</span>
+                                    <span class="price-amount">800,000₫</span>
+                                </div>
+                                <a href="/Home/BookingDetails?roomId=4" class="booking-btn">
+                                    Đặt Phòng Ngay
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="room-item">
+                        <div class="room-image-wrapper">
+                            <img src="/images/rooms/301.jpg"
+                                 alt="Phòng Suite 301"
+                                 onerror="this.src='https://via.placeholder.com/350x250/0066a1/ffffff?text=VIP+301'"
+                                 class="room-image" />
+                            <span class="room-status available">Còn Trống</span>
+                            <span class="room-badge-vip">VIP</span>
+                        </div>
+                        <div class="room-details">
+                            <div class="room-header-section">
+                                <h3 class="room-title">Phòng Suite 301</h3>
+                                <span class="room-location">📍 Hà Nội</span>
+                            </div>
+                            <p class="room-category">💎 Suite - VIP</p>
+                            <p class="room-desc">Phòng VIP cao cấp nhất với không gian sang trọng và đẳng cấp</p>
+
+                            <div class="room-amenities">
+                                <span class="amenity">🛏️ 2 Giường King</span>
+                                <span class="amenity">📺 Smart TV 4K</span>
+                                <span class="amenity">❄️ Điều hòa 2 chiều</span>
+                                <span class="amenity">🛁 Jacuzzi</span>
+                            </div>
+
+                            <div class="room-bottom">
+                                <div class="room-pricing">
+                                    <span class="price-per-night">Giá/đêm:</span>
+                                    <span class="price-amount">1,000,000₫</span>
+                                </div>
+                                <a href="/Home/BookingDetails?roomId=5" class="booking-btn">
+                                    Đặt Phòng Ngay
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pagination">
+                    <button class="page-btn disabled" disabled>« Trước</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">Sau »</button>
+                </div>
+            </main>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/booking.js" asp-append-version="true"></script>
 }

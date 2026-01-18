@@ -1,23 +1,83 @@
-.header, .footer {
-    height: 60px;
-    background: #0d6efd;
-    color: white;
-    display: flex;
-    align-items: center;
+/* ==========================================
+   CRITICAL: ENSURE FOOTER AT BOTTOM
+   ========================================== */
+
+/* Reset any conflicting styles */
+html, body {
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-.sidebar {
-    width: 260px;
-    min-height: calc(100vh - 120px);
-    background: #f8f9fa;
-    padding: 15px;
-    border-right: 1px solid #ddd;
+body {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100vh !important;
 }
 
-.content {
-    padding: 20px;
+/* Ensure header doesn't interfere */
+.header {
+    flex-shrink: 0 !important;
 }
 
-a {
-    text-decoration: none;
+/* Main content takes remaining space */
+.main-content {
+    flex: 1 0 auto !important;
+    width: 100% !important;
 }
+
+/* Footer always at bottom */
+.footer {
+    flex-shrink: 0 !important;
+    margin-top: auto !important;
+    width: 100% !important;
+}
+
+/* Remove any max-height or height restrictions */
+.main-content {
+    max-height: none !important;
+}
+
+/* Ensure all sections don't have position absolute */
+section {
+    position: relative !important;
+}
+
+/* ==========================================
+   ADDITIONAL RESETS
+   ========================================== */
+
+/* Remove any Bootstrap or other framework interference */
+.container-fluid,
+.row,
+.col {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Ensure no elements use position fixed that could interfere */
+* {
+    box-sizing: border-box !important;
+}
+
+/* ==========================================
+   DEBUG: Uncomment to see layout structure
+   ========================================== */
+
+/*
+body {
+    outline: 3px solid red !important;
+}
+
+.header {
+    outline: 3px solid blue !important;
+}
+
+.main-content {
+    outline: 3px solid green !important;
+}
+
+.footer {
+    outline: 3px solid orange !important;
+}
+*/

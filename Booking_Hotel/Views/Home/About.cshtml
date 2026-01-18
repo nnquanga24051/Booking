@@ -1,8 +1,278 @@
-﻿
-@*
-  
-*@
-@{
+﻿@{
     ViewData["Title"] = "About";
-    <h1>About Us</h1>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/about.css" asp-append-version="true" />
+}
+
+<section class="about-hero">
+    <div class="about-hero-overlay"></div>
+    <div class="about-hero-content">
+        <h1 class="about-hero-title">Về Chúng Tôi</h1>
+        <p class="about-hero-subtitle">Hành trình tạo nên những trải nghiệm đáng nhớ</p>
+    </div>
+</section>
+
+<section class="about-intro">
+    <div class="container">
+        <div class="intro-content">
+            <div class="intro-text">
+                <h2 class="section-heading">Chào Mừng Đến Với Booking Hotel</h2>
+                <p class="intro-paragraph">
+                    Được thành lập từ năm 2020, Booking Hotel đã trở thành một trong những chuỗi khách sạn
+                    hàng đầu tại Việt Nam. Với sứ mệnh mang đến những trải nghiệm lưu trú đẳng cấp và đáng nhớ,
+                    chúng tôi không ngừng nỗ lực để hoàn thiện dịch vụ và chất lượng phục vụ.
+                </p>
+                <p class="intro-paragraph">
+                    Tại Booking Hotel, chúng tôi tin rằng mỗi chuyến đi đều là một câu chuyện đáng nhớ.
+                    Đội ngũ nhân viên tận tâm, cơ sở vật chất hiện đại và dịch vụ chu đáo là cam kết của
+                    chúng tôi để biến kỳ nghỉ của bạn thành những kỷ niệm tuyệt vời.
+                </p>
+                <div class="intro-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Năm Kinh Nghiệm</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Chi Nhánh</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Phòng Cao Cấp</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Khách Hàng</div>
+                    </div>
+                </div>
+            </div>
+            <div class="intro-image">
+                <img src="/images/about-hotel.jpg"
+                     alt="Booking Hotel"
+                     onerror="this.src='https://via.placeholder.com/600x400/0066a1/ffffff?text=Booking+Hotel'" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mission-vision">
+    <div class="container">
+        <div class="mv-grid">
+            <div class="mv-card">
+                <div class="mv-icon">🎯</div>
+                <h3 class="mv-title">Sứ Mệnh</h3>
+                <p class="mv-description">
+                    Mang đến những trải nghiệm lưu trú đẳng cấp quốc tế với dịch vụ tận tâm,
+                    giúp mỗi khách hàng cảm thấy như đang ở nhà dù đang xa nhà.
+                </p>
+            </div>
+            <div class="mv-card">
+                <div class="mv-icon">👁️</div>
+                <h3 class="mv-title">Tầm Nhìn</h3>
+                <p class="mv-description">
+                    Trở thành chuỗi khách sạn hàng đầu Việt Nam, được khách hàng tin tưởng
+                    và lựa chọn cho mọi chuyến đi của họ.
+                </p>
+            </div>
+            <div class="mv-card">
+                <div class="mv-icon">💎</div>
+                <h3 class="mv-title">Giá Trị Cốt Lõi</h3>
+                <p class="mv-description">
+                    Chất lượng - Tận tâm - Sáng tạo. Chúng tôi cam kết mang đến dịch vụ
+                    vượt trội và không ngừng đổi mới để phục vụ khách hàng tốt hơn.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="our-values">
+    <div class="container">
+        <h2 class="section-heading center">Điểm Khác Biệt Của Chúng Tôi</h2>
+        <div class="values-grid">
+            <div class="value-item">
+                <div class="value-icon">🏆</div>
+                <h4 class="value-title">Chất Lượng Hàng Đầu</h4>
+                <p class="value-text">
+                    Phòng ốc được thiết kế sang trọng với đầy đủ tiện nghi hiện đại,
+                    đảm bảo sự thoải mái tối đa cho khách hàng.
+                </p>
+            </div>
+            <div class="value-item">
+                <div class="value-icon">👥</div>
+                <h4 class="value-title">Đội Ngũ Chuyên Nghiệp</h4>
+                <p class="value-text">
+                    Nhân viên được đào tạo bài bản, luôn sẵn sàng phục vụ với thái độ
+                    nhiệt tình và chuyên nghiệp.
+                </p>
+            </div>
+            <div class="value-item">
+                <div class="value-icon">📍</div>
+                <h4 class="value-title">Vị Trí Thuận Lợi</h4>
+                <p class="value-text">
+                    Các chi nhánh đều nằm ở vị trí đắc địa, gần trung tâm thành phố
+                    và các điểm du lịch nổi tiếng.
+                </p>
+            </div>
+            <div class="value-item">
+                <div class="value-icon">💰</div>
+                <h4 class="value-title">Giá Cả Hợp Lý</h4>
+                <p class="value-text">
+                    Cam kết mức giá cạnh tranh nhất thị trường với nhiều chương trình
+                    ưu đãi hấp dẫn quanh năm.
+                </p>
+            </div>
+            <div class="value-item">
+                <div class="value-icon">🛡️</div>
+                <h4 class="value-title">An Toàn & Bảo Mật</h4>
+                <p class="value-text">
+                    Hệ thống an ninh 24/7, đảm bảo sự an toàn tuyệt đối cho khách hàng
+                    và tài sản cá nhân.
+                </p>
+            </div>
+            <div class="value-item">
+                <div class="value-icon">🌟</div>
+                <h4 class="value-title">Dịch Vụ Đa Dạng</h4>
+                <p class="value-text">
+                    Cung cấp đầy đủ các dịch vụ tiện ích: nhà hàng, spa, gym,
+                    và nhiều tiện ích khác.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="branches-section">
+    <div class="container">
+        <h2 class="section-heading center">Chi Nhánh Của Chúng Tôi</h2>
+        <div class="branches-grid">
+            <div class="branch-card">
+                <div class="branch-image">
+                    <img src="/images/branch-cantho.jpg"
+                         alt="Chi nhánh Cần Thơ"
+                         onerror="this.src='https://via.placeholder.com/400x300/0066a1/ffffff?text=Cần+Thơ'" />
+                </div>
+                <div class="branch-info">
+                    <h3 class="branch-name">🏨 Chi Nhánh Cần Thơ</h3>
+                    <p class="branch-address">📍 123 Đường 3/2, Ninh Kiều, Cần Thơ</p>
+                    <p class="branch-description">
+                        Khách sạn trung tâm thành phố Cần Thơ, gần chợ nổi và các điểm du lịch nổi tiếng.
+                    </p>
+                    <div class="branch-features">
+                        <span class="feature-tag">🛏️ 20 Phòng</span>
+                        <span class="feature-tag">⭐ 4.8/5</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="branch-card">
+                <div class="branch-image">
+                    <img src="/images/branch-hcm.jpg"
+                         alt="Chi nhánh TP.HCM"
+                         onerror="this.src='https://via.placeholder.com/400x300/0066a1/ffffff?text=TP.HCM'" />
+                </div>
+                <div class="branch-info">
+                    <h3 class="branch-name">🏨 Chi Nhánh TP. Hồ Chí Minh</h3>
+                    <p class="branch-address">📍 456 Nguyễn Huệ, Quận 1, TP.HCM</p>
+                    <p class="branch-description">
+                        Tọa lạc tại trung tâm Quận 1, gần phố đi bộ Nguyễn Huệ và các điểm mua sắm.
+                    </p>
+                    <div class="branch-features">
+                        <span class="feature-tag">🛏️ 25 Phòng</span>
+                        <span class="feature-tag">⭐ 4.9/5</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="branch-card">
+                <div class="branch-image">
+                    <img src="/images/branch-hanoi.jpg"
+                         alt="Chi nhánh Hà Nội"
+                         onerror="this.src='https://via.placeholder.com/400x300/0066a1/ffffff?text=Hà+Nội'" />
+                </div>
+                <div class="branch-info">
+                    <h3 class="branch-name">🏨 Chi Nhánh Hà Nội</h3>
+                    <p class="branch-address">📍 789 Hoàn Kiếm, Hà Nội</p>
+                    <p class="branch-description">
+                        Vị trí đắc địa gần Hồ Gươm, khu phố cổ và các di tích lịch sử nổi tiếng.
+                    </p>
+                    <div class="branch-features">
+                        <span class="feature-tag">🛏️ 30 Phòng</span>
+                        <span class="feature-tag">⭐ 4.7/5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials-section">
+    <div class="container">
+        <h2 class="section-heading center">Khách Hàng Nói Gì Về Chúng Tôi</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">
+                    "Trải nghiệm tuyệt vời! Phòng sạch sẽ, nhân viên nhiệt tình.
+                    Chắc chắn sẽ quay lại lần sau."
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">👤</div>
+                    <div class="author-info">
+                        <div class="author-name">Nguyễn Văn A</div>
+                        <div class="author-location">Cần Thơ</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">
+                    "Vị trí thuận lợi, gần trung tâm. Dịch vụ chuyên nghiệp,
+                    giá cả hợp lý. Rất hài lòng!"
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">👤</div>
+                    <div class="author-info">
+                        <div class="author-name">Trần Thị B</div>
+                        <div class="author-location">TP. Hồ Chí Minh</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">
+                    "Khách sạn đẹp, tiện nghi hiện đại. Nhân viên thân thiện.
+                    Đáng để đến và trải nghiệm!"
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">👤</div>
+                    <div class="author-info">
+                        <div class="author-name">Lê Văn C</div>
+                        <div class="author-location">Hà Nội</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-about">
+    <div class="container">
+        <div class="cta-about-content">
+            <h2 class="cta-about-title">Sẵn Sàng Đặt Phòng?</h2>
+            <p class="cta-about-subtitle">Hãy để chúng tôi mang đến cho bạn những trải nghiệm tuyệt vời nhất!</p>
+            <div class="cta-about-buttons">
+                <a href="/Home/Booking" class="cta-btn-primary">Đặt Phòng Ngay</a>
+                <a href="/Home/Contact" class="cta-btn-secondary">Liên Hệ Chúng Tôi</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/about.js" asp-append-version="true"></script>
 }

@@ -44,7 +44,7 @@ CREATE TABLE branches (
 GO
 
 /* =========================================
-   BẢNG ROOMS
+   BẢNG ROOMS 
    ========================================= */
 CREATE TABLE rooms (
     room_id INT IDENTITY(1,1) PRIMARY KEY,
@@ -55,6 +55,7 @@ CREATE TABLE rooms (
     status VARCHAR(15)
         CHECK (status IN ('available','booked','maintenance'))
         DEFAULT 'available',
+    image_url NVARCHAR(255),     
     description NVARCHAR(MAX),
     CONSTRAINT fk_branch
         FOREIGN KEY (branch_id) REFERENCES branches(branch_id)
@@ -81,17 +82,17 @@ CREATE TABLE bookings (
 GO
 
 /* =========================================
-   INSERT DỮ LIỆU MẪU (15 RECORDS)
+   INSERT DỮ LIỆU MẪU
    ========================================= */
 
--- 1️⃣ Branches (3)
+-- 1️⃣ Branches
 INSERT INTO branches (branch_name, description) VALUES
 (N'Chi nhánh Cần Thơ', N'Khách sạn trung tâm Cần Thơ'),
 (N'Chi nhánh TP.HCM', N'Khách sạn Quận 1'),
 (N'Chi nhánh Hà Nội', N'Khách sạn khu vực Hồ Gươm');
 GO
 
--- 2️⃣ Users (4)
+-- 2️⃣ Users
 INSERT INTO users (full_name, email, password, role) VALUES
 (N'Nguyễn Văn A', 'a@gmail.com', '123456', 'CUSTOMER'),
 (N'Trần Thị B', 'b@gmail.com', '123456', 'CUSTOMER'),
@@ -99,16 +100,28 @@ INSERT INTO users (full_name, email, password, role) VALUES
 (N'Admin', 'admin@gmail.com', 'admin123', 'ADMIN');
 GO
 
--- 3️⃣ Rooms (5)
-INSERT INTO rooms (branch_id, room_name, room_type, price_per_night, status, description) VALUES
-(1, N'Phòng 101', N'Standard', 500000, 'available', N'Phòng tiêu chuẩn'),
-(1, N'Phòng 102', N'Deluxe', 700000, 'available', N'Phòng cao cấp'),
-(2, N'Phòng 201', N'Standard', 600000, 'maintenance', N'Đang bảo trì'),
-(2, N'Phòng 202', N'Deluxe', 800000, 'available', N'Phòng sang trọng'),
-(3, N'Phòng 301', N'Suite', 1000000, 'available', N'Phòng VIP');
+-- 3️⃣ Rooms (CÓ ẢNH)
+INSERT INTO rooms (
+    branch_id, room_name, room_type,
+    price_per_night, status, image_url, description
+) VALUES
+(1, N'Phòng 101', N'Standard', 500000, 'available',
+ N'/images/rooms/101.jpg', N'Phòng tiêu chuẩn'),
+
+(1, N'Phòng 102', N'Deluxe', 700000, 'available',
+ N'/images/rooms/102.jpg', N'Phòng cao cấp'),
+
+(2, N'Phòng 201', N'Standard', 600000, 'maintenance',
+ N'/images/rooms/201.jpg', N'Đang bảo trì'),
+
+(2, N'Phòng 202', N'Deluxe', 800000, 'available',
+ N'/images/rooms/202.jpg', N'Phòng sang trọng'),
+
+(3, N'Phòng 301', N'Suite', 1000000, 'available',
+ N'/images/rooms/301.jpg', N'Phòng VIP');
 GO
 
--- 4️⃣ Bookings (3)
+-- 4️⃣ Bookings
 INSERT INTO bookings (user_id, room_id, check_in, check_out, total_price, status) VALUES
 (1, 1, '2026-02-01', '2026-02-03', 1000000, 'booked'),
 (2, 2, '2026-02-05', '2026-02-07', 1400000, 'completed'),
