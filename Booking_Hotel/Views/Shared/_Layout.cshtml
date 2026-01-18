@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,7 +22,7 @@
                 <a class="text-white me-3" href="/Home/Booking">Booking</a>
                 <a class="text-white me-3" href="/Home/About">About</a>
                 <a class="text-white me-3" href="/Home/Contact">Contact</a>
-                <a class="btn btn-outline-light btn-sm"
+                @* <a class="btn btn-outline-light btn-sm"
                    asp-controller="Authentications"
                    asp-action="Login">
                     Login
@@ -29,8 +31,64 @@
                    asp-controller="Authentications"
                    asp-action="Register">
                     Register
-                </a>
+                </a> *@
+                @{
+                    var userId = Context.Session.GetInt32("UserId");
+                    var username = Context.Session.GetString("Username");
+                    var email = Context.Session.GetString("Email");
+                    var fullName = Context.Session.GetString("FullName");
+                }
 
+                @if (userId == null)
+                {
+                    <!-- CHƯA ĐĂNG NHẬP -->
+                    <a class="btn btn-outline-light btn-sm me-2"
+                       asp-controller="Authentications"
+                       asp-action="Login">
+                        Login
+                    </a>
+                    <a class="btn btn-outline-light btn-sm"
+                       asp-controller="Authentications"
+                       asp-action="Register">
+                        Register
+                    </a>
+                }
+                else
+                {
+                    <!-- ĐÃ ĐĂNG NHẬP -->
+                    <div class="dropdown d-inline-block">
+                        <a class="text-white dropdown-toggle"
+                           href="#"
+                           id="userDropdown"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            👤 @username
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end p-3"
+                            aria-labelledby="userDropdown"
+                            style="min-width: 250px;">
+                            <li class="mb-2">
+                                <strong>@username</strong><br />
+                                <small class="text-muted">@email</small>
+                            </li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li class="mb-2">
+                                <strong>@fullName</strong><br />
+                                <small class="text-muted">@email</small>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item text-danger"
+                                   asp-controller="Authentications"
+                                   asp-action="Logout">
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                }
             </nav>
         </div>
 

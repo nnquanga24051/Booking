@@ -11,6 +11,7 @@ namespace Booking_Hotel.Models
         [Required]
         public string RoomName { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
         public int Capacity { get; set; }
