@@ -1,7 +1,98 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Booking_Hotel.Models.User
+
 @{
-    ViewData["Title"] = "Register";
-    <h1>Register Form</h1>
+    ViewData["Title"] = "Đăng Ký";
+    Layout = null;
 }
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Booking Hotel</title>
+    <link rel="stylesheet" href="~/css/auth-styles.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="logo">
+                <div class="logo-icon">🏨</div>
+                <div class="logo-text">Booking Hotel</div>
+            </div>
+
+            <h2>Đăng Ký</h2>
+            <p class="subtitle">Tạo tài khoản mới để bắt đầu dich vu.</p>
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+
+            <form asp-action="Register" asp-controller="Authentications" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <label asp-for="FullName">Họ và tên</label>
+                    <input asp-for="FullName" type="text" placeholder="Nhập họ và tên" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email">Email</label>
+                    <input asp-for="Email" type="email" placeholder="Nhập email của bạn" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password">Mật khẩu</label>
+                    <input asp-for="Password" type="password" placeholder="Tối thiểu 6 ký tự" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword">Xác nhận mật khẩu</label>
+                    <input asp-for="ConfirmPassword" type="password" placeholder="Nhập lại mật khẩu" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn">Đăng Ký</button>
+
+                <div class="switch-form">
+                    Đã có tài khoản? <a asp-action="Login" asp-controller="Authentications">Đăng nhập ngay</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="side-panel">
+            <h3>Chào mừng đến với Booking Hotel</h3>
+            <p>Khám phá hon 500+ khách sạn tuyệt vời tren toan quoc với giá cả phải chăng.</p>
+
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <span>Đặt phòng dễ dàng</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <span>Giá tốt nhất</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <span>Hỗ trợ 24/7</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <span>500+ khách sạn</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>
