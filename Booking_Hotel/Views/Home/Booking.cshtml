@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<Booking_Hotel.Models.Room>
+
+@{
     ViewData["Title"] = "Booking";
 }
 
@@ -26,10 +28,12 @@
                             <label class="filter-label">📍 Chi Nhánh</label>
                             <select name="branch" class="filter-select">
                                 <option value="">Tất cả chi nhánh</option>
-                                <option value="1">Cần Thơ</option>
-                                <option value="2">TP. Hồ Chí Minh</option>
-                                <option value="3">Hà Nội</option>
+                                @foreach (var b in ViewBag.Branches)
+                                {
+                                    <option value="@b.BranchId">@b.BranchName</option>
+                                }
                             </select>
+
                         </div>
 
                         <div class="filter-group">
@@ -110,42 +114,61 @@
                         </select>
                     </div>
                 </div>
-
                 <div class="rooms-list">
-                    <div class="room-item">
-                        <div class="room-image-wrapper">
-                            <img src="/images/rooms/101.jpg"
-                                 alt="Phòng Standard 101"
-                                 onerror="this.src='https://via.placeholder.com/350x250/0066a1/ffffff?text=Phòng+101'"
-                                 class="room-image" />
-                            <span class="room-status available">Còn Trống</span>
-                        </div>
-                        <div class="room-details">
-                            <div class="room-header-section">
-                                <h3 class="room-title">Phòng Standard 101</h3>
-                                <span class="room-location">📍 Cần Thơ</span>
-                            </div>
-                            <p class="room-category">🏨 Standard - Tiêu Chuẩn</p>
-                            <p class="room-desc">Phòng tiêu chuẩn với đầy đủ tiện nghi, phù hợp cho du khách cá nhân và gia đình nhỏ</p>
+                    @foreach (var room in Model)
+                    {
+                        <div class="room-item">
+                            <div class="room-image-wrapper">
+                                <img src="@room.ImageUrl"
+                                     onerror="this.src='https://via.placeholder.com/350x250/0066a1/ffffff?text=Room'"
+                                     class="room-image" />
 
-                            <div class="room-amenities">
-                                <span class="amenity">🛏️ 1 Giường đôi</span>
-                                <span class="amenity">📺 TV</span>
-                                <span class="amenity">❄️ Điều hòa</span>
-                                <span class="amenity">🚿 Phòng tắm</span>
+                                <span class="room-status @(room.Status == "Available" ? "available" : "maintenance")">
+                                    @(room.Status == "Available" ? "Còn Trống" : "Bảo Trì")
+                                </span>
                             </div>
 
-                            <div class="room-bottom">
-                                <div class="room-pricing">
-                                    <span class="price-per-night">Giá/đêm:</span>
-                                    <span class="price-amount">500,000₫</span>
+                            <div class="room-details">
+                                <div class="room-header-section">
+                                    <h3 class="room-title">@room.RoomName</h3>
+                                    <span class="room-location">📍 @room.Branch?.BranchName</span>
                                 </div>
-                                <a href="/Home/BookingDetails?roomId=1" class="booking-btn">
-                                    Đặt Phòng Ngay
-                                </a>
+
+                                <p class="room-category">
+                                    🏨 @room.RoomType
+                                </p>
+
+                                <p class="room-desc">
+                                    Sức chứa: @room.Capacity người
+                                </p>
+
+                                <div class="room-bottom">
+                                    <div class="room-pricing">
+                                        <span class="price-per-night">Giá/đêm:</span>
+                                        <span class="price-amount">
+                                            @room.Price.ToString("N0")₫
+                                        </span>
+                                    </div>
+
+                                    @if (room.Status == "Available")
+                                    {
+                                        <a href="/Home/BookingDetails?roomId=@room.RoomId"
+                                           class="booking-btn">
+                                            Đặt Phòng Ngay
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <button class="booking-btn disabled" disabled>
+                                            Không Khả Dụng
+                                        </button>
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
+                </div>
+
 
                     <div class="room-item">
                         <div class="room-image-wrapper">

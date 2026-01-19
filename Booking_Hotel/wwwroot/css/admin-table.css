@@ -307,15 +307,12 @@
 
 .modal {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 2000;
+    inset: 0;
     display: none;
+    z-index: 1000;
 }
 
-    .modal.active {
+    .modal.show {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -323,24 +320,17 @@
 
 .modal-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
+    inset: 0;
+    background: rgba(0,0,0,0.5);
 }
 
 .modal-content {
     position: relative;
     background: #fff;
-    border-radius: 16px;
-    width: 90%;
-    max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    animation: modalSlideIn 0.3s ease;
+    padding: 20px;
+    width: 420px;
+    border-radius: 10px;
+    z-index: 1001;
 }
 
     .modal-content.large {
@@ -547,3 +537,29 @@
         grid-template-columns: 1fr;
     }
 }
+.form-error {
+    color: #dc3545; /* đỏ chuẩn */
+    background: #ffecec;
+    border: 1px solid #dc3545;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+.form-message {
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+    .form-message.error {
+        color: #dc3545;
+        background: #ffecec;
+        border: 1px solid #dc3545;
+    }
+
+    .form-message.success {
+        color: #198754;
+        background: #e9f7ef;
+        border: 1px solid #198754;
+    }

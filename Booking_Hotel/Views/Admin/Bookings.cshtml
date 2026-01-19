@@ -1,0 +1,69 @@
+﻿@model List<Booking_Hotel.Models.Booking>
+
+@{
+    ViewData["Title"] = "Quản Lý Booking";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin-table.css" />
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <h1>📅 Quản Lý Booking</h1>
+        <p>Theo dõi & xử lý các đơn đặt phòng</p>
+    </div>
+
+    <div class="filter-section">
+        <input type="text" id="searchInput" class="filter-input"
+               placeholder="🔍 Tìm theo khách hàng / phòng" />
+
+        <select id="statusFilter" class="filter-select">
+            <option value="">Tất cả trạng thái</option>
+            <option value="Pending">Chờ xử lý</option>
+            <option value="Completed">Hoàn thành</option>
+            <option value="Cancelled">Đã huỷ</option>
+        </select>
+    </div>
+
+    <table class="data-table" id="bookingTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Khách Hàng</th>
+                <th>Phòng</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Trạng Thái</th>
+                <th>Thao Tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var b in Model)
+            {
+                <tr>
+                    <td>#@b.BookingId</td>
+                    <td>@b.User.FullName</td>
+                    <td>@b.Room.RoomName</td>
+                    <td>@b.CheckIn.ToString("dd/MM/yyyy")</td>
+                    <td>@b.CheckOut.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <span class="status-badge @b.Status.ToLower()">
+                            @b.Status
+                        </span>
+                    </td>
+                    <td>
+                        <button onclick="viewBooking(@b.BookingId)">👁️</button>
+                        <button onclick="updateStatus(@b.BookingId, 'Completed')">✅</button>
+                        <button onclick="deleteBooking(@b.BookingId)">🗑️</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="~/js/admin-bookings.js"></script>
+}

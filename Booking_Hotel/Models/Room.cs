@@ -1,6 +1,6 @@
+﻿using Booking_Hotel.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Booking_Hotel.Models
 {
     public class Room
@@ -9,7 +9,7 @@ namespace Booking_Hotel.Models
         public int RoomId { get; set; }
 
         [Required]
-        public string RoomName { get; set; }
+        public string RoomName { get; set; } = string.Empty;
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
@@ -18,8 +18,14 @@ namespace Booking_Hotel.Models
 
         public string Status { get; set; } = "Available";
 
-        [ForeignKey("Branch")]
+        public string? RoomType { get; set; }
+        public string? ImageUrl { get; set; }
+
+        // 🔥 FIX Ở ĐÂY
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+
         public int BranchId { get; set; }
-        public Branch Branch { get; set; }
+        public Branch? Branch { get; set; }
     }
 }

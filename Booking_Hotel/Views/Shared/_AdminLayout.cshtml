@@ -29,19 +29,19 @@
                 </a>
                 <a href="/Admin/Users" class="nav-item">
                     <span class="nav-icon">👥</span>
-                    <span class="nav-text">Quản Lý Users</span>
+                    <span class="nav-text"  asp-controller="AdminController" asp:action="Users">Quản Lý Users</span>
                 </a>
                 <a href="/Admin/Branches" class="nav-item">
                     <span class="nav-icon">🏢</span>
-                    <span class="nav-text">Quản Lý Chi Nhánh</span>
+                    <span class="nav-text" asp-controller="AdminController" asp:action="Branches">Quản Lý Chi Nhánh</span>
                 </a>
                 <a href="/Admin/Rooms" class="nav-item">
                     <span class="nav-icon">🏨</span>
-                    <span class="nav-text">Quản Lý Phòng</span>
+                    <span class="nav-text" asp-controller="AdminController" asp:action="Rooms">Quản Lý Phòng</span>
                 </a>
                 <a href="/Admin/Bookings" class="nav-item">
                     <span class="nav-icon">📅</span>
-                    <span class="nav-text">Quản Lý Đặt Phòng</span>
+                    <span class="nav-text" asp-controller="AdminController" asp-action="ManageBooking">Quản Lý Đặt Phòng</span>
                 </a>
                 <a href="/Admin/Reports" class="nav-item">
                     <span class="nav-icon">📈</span>

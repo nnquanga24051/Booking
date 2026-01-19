@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<Booking_Hotel.Models.Room>
+
+@{
     ViewData["Title"] = "Quản Lý Phòng";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -14,9 +16,7 @@
             <p class="page-subtitle">Quản lý tất cả phòng trong hệ thống</p>
         </div>
         <div class="header-right">
-            <button class="btn-secondary" onclick="location.href='/Admin/Rooms/Export'">
-                📥 Xuất Excel
-            </button>
+            
             <button class="btn-primary" onclick="openAddRoomModal()">
                 ➕ Thêm Phòng
             </button>
@@ -26,15 +26,15 @@
     <div class="filter-section">
         <div class="filter-group">
             <input type="text" id="searchInput" class="filter-input" placeholder="🔍 Tìm kiếm theo tên phòng..." />
+           
         </div>
-        <div class="filter-group">
-            <select id="branchFilter" class="filter-select">
-                <option value="">Tất cả chi nhánh</option>
-                <option value="1">Cần Thơ</option>
-                <option value="2">TP.HCM</option>
-                <option value="3">Hà Nội</option>
-            </select>
-        </div>
+        <select id="branchFilter" class="filter-select">
+            <option value="">Tất cả chi nhánh</option>
+            <option value="Cần Thơ">Cần Thơ</option>
+            <option value="TP Hồ Chí Minh">TP.HCM</option>
+            <option value="Hà Nội">Hà Nội</option>
+        </select>
+
         <div class="filter-group">
             <select id="typeFilter" class="filter-select">
                 <option value="">Tất cả loại phòng</option>
@@ -71,112 +71,49 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><input type="checkbox" class="row-checkbox" /></td>
-                    <td>#1</td>
-                    <td>
-                        <img src="/images/rooms/101.jpg"
-                             onerror="this.src='https://via.placeholder.com/80x60/0066a1/ffffff?text=101'"
+                @foreach (var room in Model)
+                {
+                    <tr>
+                        <td><input type="checkbox" /></td>
+
+                        <td>#@room.RoomId</td>
+
+                        <td>
+                            <img src="@(string.IsNullOrEmpty(room.ImageUrl)
+                                                         ? "https://via.placeholder.com/80x60?text=Room"
+                                                         : room.ImageUrl)"
                              class="room-thumbnail" />
                     </td>
-                    <td><strong>Phòng 101</strong></td>
-                    <td>Cần Thơ</td>
-                    <td><span class="type-badge standard">Standard</span></td>
-                    <td>500,000₫</td>
-                    <td><span class="status-badge available">Còn Trống</span></td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn-action view" onclick="viewRoom(1)">👁️</button>
-                            <button class="btn-action edit" onclick="editRoom(1)">✏️</button>
-                            <button class="btn-action delete" onclick="deleteRoom(1)">🗑️</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="row-checkbox" /></td>
-                    <td>#2</td>
-                    <td>
-                        <img src="/images/rooms/102.jpg"
-                             onerror="this.src='https://via.placeholder.com/80x60/0066a1/ffffff?text=102'"
-                             class="room-thumbnail" />
-                    </td>
-                    <td><strong>Phòng 102</strong></td>
-                    <td>Cần Thơ</td>
-                    <td><span class="type-badge deluxe">Deluxe</span></td>
-                    <td>700,000₫</td>
-                    <td><span class="status-badge available">Còn Trống</span></td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn-action view" onclick="viewRoom(2)">👁️</button>
-                            <button class="btn-action edit" onclick="editRoom(2)">✏️</button>
-                            <button class="btn-action delete" onclick="deleteRoom(2)">🗑️</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="row-checkbox" /></td>
-                    <td>#3</td>
-                    <td>
-                        <img src="/images/rooms/201.jpg"
-                             onerror="this.src='https://via.placeholder.com/80x60/ff9800/ffffff?text=201'"
-                             class="room-thumbnail" />
-                    </td>
-                    <td><strong>Phòng 201</strong></td>
-                    <td>TP.HCM</td>
-                    <td><span class="type-badge standard">Standard</span></td>
-                    <td>600,000₫</td>
-                    <td><span class="status-badge maintenance">Bảo Trì</span></td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn-action view" onclick="viewRoom(3)">👁️</button>
-                            <button class="btn-action edit" onclick="editRoom(3)">✏️</button>
-                            <button class="btn-action delete" onclick="deleteRoom(3)">🗑️</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="row-checkbox" /></td>
-                    <td>#4</td>
-                    <td>
-                        <img src="/images/rooms/202.jpg"
-                             onerror="this.src='https://via.placeholder.com/80x60/0066a1/ffffff?text=202'"
-                             class="room-thumbnail" />
-                    </td>
-                    <td><strong>Phòng 202</strong></td>
-                    <td>TP.HCM</td>
-                    <td><span class="type-badge deluxe">Deluxe</span></td>
-                    <td>800,000₫</td>
-                    <td><span class="status-badge available">Còn Trống</span></td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn-action view" onclick="viewRoom(4)">👁️</button>
-                            <button class="btn-action edit" onclick="editRoom(4)">✏️</button>
-                            <button class="btn-action delete" onclick="deleteRoom(4)">🗑️</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="row-checkbox" /></td>
-                    <td>#5</td>
-                    <td>
-                        <img src="/images/rooms/301.jpg"
-                             onerror="this.src='https://via.placeholder.com/80x60/ffd700/333333?text=VIP'"
-                             class="room-thumbnail" />
-                    </td>
-                    <td><strong>Phòng 301</strong></td>
-                    <td>Hà Nội</td>
-                    <td><span class="type-badge suite">Suite</span></td>
-                    <td>1,000,000₫</td>
-                    <td><span class="status-badge available">Còn Trống</span></td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn-action view" onclick="viewRoom(5)">👁️</button>
-                            <button class="btn-action edit" onclick="editRoom(5)">✏️</button>
-                            <button class="btn-action delete" onclick="deleteRoom(5)">🗑️</button>
-                        </div>
-                    </td>
-                </tr>
+
+                        <td><strong>@room.RoomName</strong></td>
+
+                        <td>@room.Branch?.BranchName</td>
+
+                        <td>
+                            <span class="type-badge @(room.RoomType?.ToLower() ?? "standard")">
+                                @(room.RoomType ?? "Standard")
+                            </span>
+                        </td>
+
+                        <td>@room.Price.ToString("N0") ₫</td>
+
+                        <td>
+                            <span class="status-badge @room.Status.ToLower()">
+                                @room.Status
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-action view" onclick="viewRoom(@room.RoomId)">👁️</button>
+                                <button class="btn-action edit" onclick="editRoom(@room.RoomId)">✏️</button>
+                                <button class="btn-action delete" onclick="deleteRoom(@room.RoomId)">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                                }
             </tbody>
+
         </table>
     </div>
 
@@ -228,19 +165,27 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label>Giá/Đêm (VNĐ) *</label>
-                        <input type="number" id="pricePerNight" class="form-control" required />
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Giá / Đêm *</label>
+                            <input type="number" id="price" class="form-control" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Sức chứa *</label>
+                            <input type="number" id="capacity" class="form-control" required />
+                        </div>
                     </div>
-                </div>
+
 
                 <div class="form-group">
                     <label>Trạng Thái *</label>
-                    <select id="status" class="form-control" required>
-                        <option value="available">Còn trống</option>
-                        <option value="booked">Đã đặt</option>
-                        <option value="maintenance">Bảo trì</option>
-                    </select>
+                        <select id="status" class="form-control">
+                            <option value="Available">Còn trống</option>
+                            <option value="Booked">Đã đặt</option>
+                            <option value="Maintenance">Bảo trì</option>
+                        </select>
+
                 </div>
 
                 <div class="form-group">

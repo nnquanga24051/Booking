@@ -1,7 +1,5 @@
 is_global = true
 build_property.TargetFramework = net8.0
-build_property.TargetFrameworkIdentifier = .NETCoreApp
-build_property.TargetFrameworkVersion = v8.0
 build_property.TargetPlatformMinVersion = 
 build_property.UsingMicrosoftNETSdkWeb = true
 build_property.ProjectTypeGuids = 
@@ -11,89 +9,91 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Booking_Hotel
 build_property.RootNamespace = Booking_Hotel
-build_property.ProjectDir = D:\miniproject\Booking\Booking_Hotel\
+build_property.ProjectDir = D:\Booking\Booking_Hotel\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\miniproject\Booking\Booking_Hotel
+build_property.MSBuildProjectDirectory = D:\Booking\Booking_Hotel
 build_property._RazorSourceGeneratorDebug = 
-build_property.EffectiveAnalysisLevelStyle = 8.0
-build_property.EnableCodeStyleSeverity = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Admin/admin-dashboard.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cYWRtaW4tZGFzaGJvYXJkLmNzaHRtbA==
+[D:/Booking/Booking_Hotel/Views/Admin/Bookings.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQm9va2luZ3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Admin/Branches.cshtml]
+[D:/Booking/Booking_Hotel/Views/Admin/Branches.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQnJhbmNoZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Admin/Rooms.cshtml]
+[D:/Booking/Booking_Hotel/Views/Admin/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Booking/Booking_Hotel/Views/Admin/Rooms.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUm9vbXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Admin/Users.cshtml]
+[D:/Booking/Booking_Hotel/Views/Admin/Users.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVXNlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Authentications/ForgotPassword.cshtml]
+[D:/Booking/Booking_Hotel/Views/Authentications/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGljYXRpb25zXEZvcmdvdFBhc3N3b3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Authentications/Login.cshtml]
+[D:/Booking/Booking_Hotel/Views/Authentications/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGljYXRpb25zXExvZ2luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Authentications/Register.cshtml]
+[D:/Booking/Booking_Hotel/Views/Authentications/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGljYXRpb25zXFJlZ2lzdGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Authentications/ResetPassword.cshtml]
+[D:/Booking/Booking_Hotel/Views/Authentications/ResetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGljYXRpb25zXFJlc2V0UGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Home/About.cshtml]
+[D:/Booking/Booking_Hotel/Views/Home/About.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Home/Booking.cshtml]
+[D:/Booking/Booking_Hotel/Views/Home/Booking.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxCb29raW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Home/Contact.cshtml]
+[D:/Booking/Booking_Hotel/Views/Home/Contact.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb250YWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Home/Index.cshtml]
+[D:/Booking/Booking_Hotel/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Shared/Booking_Layout.cshtml]
+[D:/Booking/Booking_Hotel/Views/Shared/Booking_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEJvb2tpbmdfTGF5b3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Shared/Error.cshtml]
+[D:/Booking/Booking_Hotel/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/Booking/Booking_Hotel/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/_ViewImports.cshtml]
+[D:/Booking/Booking_Hotel/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/_ViewStart.cshtml]
+[D:/Booking/Booking_Hotel/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Shared/_AdminLayout.cshtml]
+[D:/Booking/Booking_Hotel/Views/Shared/_AdminLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = b-6tst48k0z5
 
-[D:/miniproject/Booking/Booking_Hotel/Views/Shared/_Layout.cshtml]
+[D:/Booking/Booking_Hotel/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-bui077xa3z

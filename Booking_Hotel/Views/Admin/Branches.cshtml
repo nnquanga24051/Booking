@@ -1,4 +1,7 @@
-﻿@{
+﻿@model List<Booking_Hotel.Models.Branch>
+
+
+@{
     ViewData["Title"] = "Quản Lý Chi Nhánh";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -11,7 +14,7 @@
     <div class="page-header">
         <div class="header-left">
             <h1 class="page-title">🏢 Quản Lý Chi Nhánh</h1>
-            <p class="page-subtitle">Quản lý tất cả chi nhánh trong hệ thống</p>
+          
         </div>
         <div class="header-right">
             <button class="btn-primary" onclick="openAddBranchModal()">
@@ -19,87 +22,52 @@
             </button>
         </div>
     </div>
-
     <div class="branches-grid">
-        <div class="branch-card-admin">
-            <div class="branch-header">
-                <div class="branch-icon-large">📍</div>
-                <div class="branch-badge active">Hoạt động</div>
-            </div>
-            <div class="branch-body">
-                <h3 class="branch-title">Chi Nhánh Cần Thơ</h3>
-                <p class="branch-desc">Khách sạn trung tâm Cần Thơ</p>
-                <div class="branch-stats">
-                    <div class="stat">
-                        <span class="stat-icon">🏨</span>
-                        <span class="stat-text">20 phòng</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-icon">📅</span>
-                        <span class="stat-text">15 đặt phòng</span>
-                    </div>
+        @foreach (var branch in Model)
+        {
+            <div class="branch-card-admin">
+                <div class="branch-header">
+                    <div class="branch-icon-large">📍</div>
+                    <div class="branch-badge active">Hoạt động</div>
                 </div>
-                <div class="branch-date">Tạo: 01/01/2026</div>
-            </div>
-            <div class="branch-footer">
-                <button class="btn-action edit" onclick="editBranch(1)">✏️ Sửa</button>
-                <button class="btn-action delete" onclick="deleteBranch(1)">🗑️ Xóa</button>
-            </div>
-        </div>
 
-        <div class="branch-card-admin">
-            <div class="branch-header">
-                <div class="branch-icon-large">📍</div>
-                <div class="branch-badge active">Hoạt động</div>
-            </div>
-            <div class="branch-body">
-                <h3 class="branch-title">Chi Nhánh TP.HCM</h3>
-                <p class="branch-desc">Khách sạn Quận 1</p>
-                <div class="branch-stats">
-                    <div class="stat">
-                        <span class="stat-icon">🏨</span>
-                        <span class="stat-text">25 phòng</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-icon">📅</span>
-                        <span class="stat-text">20 đặt phòng</span>
-                    </div>
-                </div>
-                <div class="branch-date">Tạo: 01/01/2026</div>
-            </div>
-            <div class="branch-footer">
-                <button class="btn-action edit" onclick="editBranch(2)">✏️ Sửa</button>
-                <button class="btn-action delete" onclick="deleteBranch(2)">🗑️ Xóa</button>
-            </div>
-        </div>
+                <div class="branch-body">
+                    <h3 class="branch-title">@branch.BranchName</h3>
+                    <p class="branch-desc">@branch.Address</p>
 
-        <div class="branch-card-admin">
-            <div class="branch-header">
-                <div class="branch-icon-large">📍</div>
-                <div class="branch-badge active">Hoạt động</div>
-            </div>
-            <div class="branch-body">
-                <h3 class="branch-title">Chi Nhánh Hà Nội</h3>
-                <p class="branch-desc">Khách sạn khu vực Hồ Gươm</p>
-                <div class="branch-stats">
-                    <div class="stat">
-                        <span class="stat-icon">🏨</span>
-                        <span class="stat-text">30 phòng</span>
+                    <div class="branch-stats">
+                        <div class="stat">
+                            <span class="stat-icon">🏨</span>
+                            <span class="stat-text">
+                                @(branch.Rooms?.Count ?? 0) phòng
+                            </span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">📅</span>
+                            <span class="stat-text">-- đặt phòng</span>
+                        </div>
                     </div>
-                    <div class="stat">
-                        <span class="stat-icon">📅</span>
-                        <span class="stat-text">25 đặt phòng</span>
+
+                    <div class="branch-date">
+                        ID: #@branch.BranchId
                     </div>
                 </div>
-                <div class="branch-date">Tạo: 01/01/2026</div>
+
+                <div class="branch-footer">
+                    <button class="btn-action edit"
+                            onclick="editBranch(@branch.BranchId)">
+                        ✏️ Sửa
+                    </button>
+
+                    <button class="btn-action delete"
+                            onclick="deleteBranch(@branch.BranchId)">
+                        🗑️ Xóa
+                    </button>
+                </div>
             </div>
-            <div class="branch-footer">
-                <button class="btn-action edit" onclick="editBranch(3)">✏️ Sửa</button>
-                <button class="btn-action delete" onclick="deleteBranch(3)">🗑️ Xóa</button>
-            </div>
-        </div>
+        }
     </div>
-</div>
+
 
 <div class="modal" id="branchModal">
     <div class="modal-overlay" onclick="closeBranchModal()"></div>

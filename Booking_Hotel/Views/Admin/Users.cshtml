@@ -1,5 +1,7 @@
-﻿@{
-    ViewData["Title"] = "Quản Lý Users";
+﻿@model List<Booking_Hotel.Models.ViewModels.AdminUserVM>
+
+@{
+    ViewData["Title"] = "Quản Lý Người Dùng";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -8,181 +10,152 @@
 }
 
 <div class="page-container">
+
+    <!-- HEADER -->
     <div class="page-header">
         <div class="header-left">
-            <h1 class="page-title">👥 Quản Lý Người Dùng</h1>
-            <p class="page-subtitle">Quản lý tất cả người dùng trong hệ thống</p>
+            <h1 class="page-title">👥 Quản Lý Khách Hàng </h1>
+            
         </div>
         <div class="header-right">
-            <button class="btn-primary" onclick="openAddUserModal()">
+            <button type="button" class="btn-primary" onclick="openAddUserModal()">
                 ➕ Thêm Người Dùng
             </button>
         </div>
     </div>
 
-    <div class="filter-section">
-        <div class="filter-group">
-            <input type="text" id="searchInput" class="filter-input" placeholder="🔍 Tìm kiếm theo tên, email..." />
-        </div>
-        <div class="filter-group">
-            <select id="roleFilter" class="filter-select">
-                <option value="">Tất cả vai trò</option>
-                <option value="ADMIN">Admin</option>
-                <option value="CUSTOMER">Customer</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <select id="sortBy" class="filter-select">
-                <option value="newest">Mới nhất</option>
-                <option value="oldest">Cũ nhất</option>
-                <option value="name">Tên A-Z</option>
-            </select>
-        </div>
-    </div>
+    <!-- SEARCH -->
+    <form method="get" class="filter-section">
+        <input type="text"
+               name="keyword"
+               value="@Context.Request.Query["keyword"]"
+               class="filter-input"
+               placeholder="🔍 Tìm kiếm theo tên, email..." />
+        <button type="submit" class="btn-primary">Tìm Kiếm</button>
 
+        <button class="refresh-btn" onclick="location.reload()">🔄 Làm Mới</button>
+    </form>
+
+    <!-- TABLE -->
     <div class="table-card">
-        <table class="data-table" id="usersTable">
+        <table class="data-table">
             <thead>
                 <tr>
-                    <th>
-                        <input type="checkbox" id="selectAll" />
-                    </th>
-                    <th>ID</th>
+                    <th style="width:80px">ID</th>
                     <th>Họ Tên</th>
                     <th>Email</th>
-                    <th>Vai Trò</th>
-                    <th>Ngày Tạo</th>
-                    <th>Thao Tác</th>
+                    <th style="width:120px">Vai Trò</th>
+                    <th style="width:140px">Thao Tác</th>
                 </tr>
             </thead>
+
             <tbody>
-                <tr>
-                    <td><input type="checkbox" class="row-checkbox" /></td>
-                    <td>#1</td>
-                    <td>
-                        <div class="user-cell">
-                            <div class="user-avatar">👤</div>
-                            <span>Nguyễn Văn A</span>
-                        </div>
-                    </td>
-                    <td>a@gmail.com</td>
-                    <td><span class="role-badge customer">Customer</span></td>
-                    <td>01/01/2026</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn-action edit" onclick="editUser(1)">✏️</button>
-                            <button class="btn-action delete" onclick="deleteUser(1)">🗑️</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="row-checkbox" /></td>
-                    <td>#2</td>
-                    <td>
-                        <div class="user-cell">
-                            <div class="user-avatar">👤</div>
-                            <span>Trần Thị B</span>
-                        </div>
-                    </td>
-                    <td>b@gmail.com</td>
-                    <td><span class="role-badge customer">Customer</span></td>
-                    <td>02/01/2026</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn-action edit" onclick="editUser(2)">✏️</button>
-                            <button class="btn-action delete" onclick="deleteUser(2)">🗑️</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="row-checkbox" /></td>
-                    <td>#3</td>
-                    <td>
-                        <div class="user-cell">
-                            <div class="user-avatar">👤</div>
-                            <span>Lê Văn C</span>
-                        </div>
-                    </td>
-                    <td>c@gmail.com</td>
-                    <td><span class="role-badge customer">Customer</span></td>
-                    <td>03/01/2026</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn-action edit" onclick="editUser(3)">✏️</button>
-                            <button class="btn-action delete" onclick="deleteUser(3)">🗑️</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="row-checkbox" /></td>
-                    <td>#4</td>
-                    <td>
-                        <div class="user-cell">
-                            <div class="user-avatar admin">👑</div>
-                            <span>Admin</span>
-                        </div>
-                    </td>
-                    <td>admin@gmail.com</td>
-                    <td><span class="role-badge admin">Admin</span></td>
-                    <td>01/01/2026</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn-action edit" onclick="editUser(4)">✏️</button>
-                        </div>
-                    </td>
-                </tr>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>#@user.UserId</td>
+
+                            <td>
+                                <div class="user-cell">
+                                    <div class="user-avatar @(user.Role == "Admin" ? "admin" : "")">
+                                        @(user.Role == "Admin" ? "👑" : "👤")
+                                    </div>
+                                    <span>@user.FullName</span>
+                                </div>
+                            </td>
+
+                            <td>@user.Email</td>
+
+                            <td>
+                                <span class="role-badge @(user.Role == "Admin" ? "admin" : "customer")">
+                                    @user.Role
+                                </span>
+                            </td>
+
+                            <td>
+                                <button type="button"
+                                        class="btn-action edit"
+                                        title="Chỉnh sửa"
+                                        onclick="editUser(@user.UserId)">
+                                    ✏️
+                                </button>
+
+                                @if (user.Role != "Admin")
+                                {
+                                    <button type="button"
+                                            class="btn-action delete"
+                                            title="Xóa"
+                                            onclick="deleteUser(@user.UserId)">
+                                        🗑️
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            Không có người dùng nào
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
-
-    <div class="pagination">
-        <button class="page-btn" disabled>‹ Trước</button>
-        <button class="page-btn active">1</button>
-        <button class="page-btn">2</button>
-        <button class="page-btn">3</button>
-        <button class="page-btn">Sau ›</button>
-    </div>
 </div>
 
+<!-- MODAL ADD / EDIT USER -->
 <div class="modal" id="userModal">
     <div class="modal-overlay" onclick="closeUserModal()"></div>
+
     <div class="modal-content">
         <div class="modal-header">
-            <h3 id="modalTitle">➕ Thêm Người Dùng Mới</h3>
-            <button class="modal-close" onclick="closeUserModal()">✕</button>
+            <h3 id="modalTitle">Người Dùng</h3>
+            <button type="button" class="modal-close" onclick="closeUserModal()">✕</button>
         </div>
+
         <div class="modal-body">
-            <form id="userForm">
-                <input type="hidden" id="userId" />
+            <div id="formMessage" class="form-message" style="display:none;"></div>
 
-                <div class="form-group">
-                    <label>Họ và Tên *</label>
-                    <input type="text" id="fullName" class="form-control" required />
-                </div>
+            <input type="hidden" id="userId" />
 
-                <div class="form-group">
-                    <label>Email *</label>
-                    <input type="email" id="email" class="form-control" required />
-                </div>
+            <div class="form-group">
+                <label>Họ tên</label>
+                <input id="fullName" class="form-control" />
+            </div>
 
-                <div class="form-group">
-                    <label>Mật khẩu *</label>
-                    <input type="password" id="password" class="form-control" required />
-                </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input id="email" class="form-control" />
+            </div>
 
-                <div class="form-group">
-                    <label>Vai trò *</label>
-                    <select id="role" class="form-control">
-                        <option value="CUSTOMER">Customer</option>
-                        <option value="ADMIN">Admin</option>
-                    </select>
-                </div>
-            </form>
+            <div class="form-group">
+                <label>Mật khẩu</label>
+                <input id="password" type="password" class="form-control"
+                       placeholder="Để trống nếu không đổi mật khẩu" />
+            </div>
+
+            <div class="form-group">
+                <label>Vai trò</label>
+                <select id="role" class="form-control">
+                    <option value="User">Khách hàng</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+            <div id="formError" class="form-error mb-2" style="display:none;"></div>
+
         </div>
+
         <div class="modal-footer">
-            <button class="btn-secondary" onclick="closeUserModal()">Hủy</button>
-            <button class="btn-primary" onclick="saveUser()">Lưu</button>
+            <button type="button" class="btn-secondary" onclick="closeUserModal()">Hủy</button>
+            <button type="button" class="btn-primary" onclick="saveUser()">Lưu</button>
         </div>
+    
+
     </div>
 </div>
 
