@@ -93,3 +93,26 @@ function saveUser() {
             messageBox.style.display = "block";
         });
 }
+function deleteUser(id) {
+    if (!confirm("Bạn có chắc muốn xóa người dùng này không?")) return;
+
+    fetch("/Admin/DeleteUser", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(id)
+    })
+        .then(async res => {
+            const text = await res.text();
+            if (!res.ok) throw new Error(text);
+            return text;
+        })
+        .then(() => {
+            alert("Xóa người dùng thành công");
+            location.reload();
+        })
+        .catch(err => {
+            alert(err.message || "Không thể xóa người dùng");
+        });
+}
