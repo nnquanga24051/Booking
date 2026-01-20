@@ -25,35 +25,117 @@ namespace Booking_Hotel.Controllers
         // =========================
         // DASHBOARD
         // =========================
+        //public async Task<IActionResult> Dashboard()
+        //{
+        //    // Check quyền Admin
+        //    if (HttpContext.Session.GetString("UserRole") != "Admin")
+        //    {
+        //        return RedirectToAction("Login", "Authentications");
+        //    }
+
+        //    var model = new AdminDashboardViewModel
+        //    {
+        //        TotalUsers = await _context.Users.CountAsync(),
+        //        TotalRooms = await _context.Rooms.CountAsync(),
+
+        //        BookingsThisMonth = await _context.Bookings
+        //            .CountAsync(b => b.CheckIn.Month == DateTime.Now.Month
+        //                          && b.CheckIn.Year == DateTime.Now.Year),
+
+        //        TotalRevenue = await _context.Bookings
+        //            .Where(b => b.Status == "Completed")
+        //            .Join(_context.Rooms,
+        //                b => b.RoomId,
+        //                r => r.RoomId,
+        //                (b, r) => r.Price)
+        //            .SumAsync(),
+
+        //        AvailableRooms = await _context.Rooms.CountAsync(r => r.Status == "Available"),
+        //        BookedRooms = await _context.Rooms.CountAsync(r => r.Status == "Booked"),
+        //        MaintenanceRooms = await _context.Rooms.CountAsync(r => r.Status == "Maintenance"),
+
+        //        RecentBookings = await _context.Bookings
+        //            .Include(b => b.User)
+        //            .Include(b => b.Room)
+        //            .OrderByDescending(b => b.BookingId)
+        //            .Take(5)
+        //            .Select(b => new RecentBookingVM
+        //            {
+        //                BookingId = b.BookingId,
+        //                FullName = b.User.FullName,
+        //                RoomName = b.Room.RoomName,
+        //                CheckIn = b.CheckIn,
+        //                CheckOut = b.CheckOut,
+        //                Status = b.Status,
+        //                Price = b.Room.Price
+        //            }).ToListAsync(),
+
+        //        Branches = await _context.Branches
+        //            .Select(br => new BranchVM
+        //            {
+        //                BranchName = br.BranchName,
+        //                RoomCount = _context.Rooms.Count(r => r.BranchId == br.BranchId)
+        //            }).ToListAsync(),
+
+        //        NewUsers = await _context.Users
+        //            .OrderByDescending(u => u.UserId)
+        //            .Take(5)
+        //            .Select(u => new UserVM
+        //            {
+        //                FullName = u.FullName,
+        //                Email = u.Email
+        //            }).ToListAsync()
+        //    };
+
+        //    return View(model);
+        //}
+
+
         public async Task<IActionResult> Dashboard()
         {
-            // Check quyền Admin
             if (HttpContext.Session.GetString("UserRole") != "Admin")
             {
                 return RedirectToAction("Login", "Authentications");
             }
 
+            var now = DateTime.Now;
+            var firstDayOfMonth = new DateTime(now.Year, now.Month, 1);
+            var firstDayNextMonth = firstDayOfMonth.AddMonths(1);
+
+            // ===== BOOKINGS THÁNG HIỆN TẠI =====
+            var bookingsThisMonth = await _context.Bookings
+                .Include(b => b.Room)
+                .Where(b =>
+                    b.Status == "Completed" &&
+                    b.CheckIn >= firstDayOfMonth &&
+                    b.CheckIn < firstDayNextMonth
+                )
+                .ToListAsync();
+
+            int bookingsCount = bookingsThisMonth.Count;
+
+            // ===== TỔNG DOANH THU (THEO SỐ ĐÊM) =====
+            decimal totalRevenue = bookingsThisMonth.Sum(b =>
+            {
+                int nights = (b.CheckOut.Date - b.CheckIn.Date).Days;
+                if (nights <= 0) nights = 1;
+                return nights * b.Room.Price;
+            });
+
             var model = new AdminDashboardViewModel
             {
+                // ===== TỔNG =====
                 TotalUsers = await _context.Users.CountAsync(),
                 TotalRooms = await _context.Rooms.CountAsync(),
+                BookingsThisMonth = bookingsCount,
+                TotalRevenue = totalRevenue,
 
-                BookingsThisMonth = await _context.Bookings
-                    .CountAsync(b => b.CheckIn.Month == DateTime.Now.Month
-                                  && b.CheckIn.Year == DateTime.Now.Year),
-
-                TotalRevenue = await _context.Bookings
-                    .Where(b => b.Status == "Completed")
-                    .Join(_context.Rooms,
-                        b => b.RoomId,
-                        r => r.RoomId,
-                        (b, r) => r.Price)
-                    .SumAsync(),
-
+                // ===== TRẠNG THÁI PHÒNG =====
                 AvailableRooms = await _context.Rooms.CountAsync(r => r.Status == "Available"),
                 BookedRooms = await _context.Rooms.CountAsync(r => r.Status == "Booked"),
                 MaintenanceRooms = await _context.Rooms.CountAsync(r => r.Status == "Maintenance"),
 
+                // ===== RECENT BOOKINGS =====
                 RecentBookings = await _context.Bookings
                     .Include(b => b.User)
                     .Include(b => b.Room)
@@ -67,16 +149,22 @@ namespace Booking_Hotel.Controllers
                         CheckIn = b.CheckIn,
                         CheckOut = b.CheckOut,
                         Status = b.Status,
-                        Price = b.Room.Price
-                    }).ToListAsync(),
+                        Price =
+                            Math.Max((b.CheckOut.Date - b.CheckIn.Date).Days, 1)
+                            * b.Room.Price
+                    })
+                    .ToListAsync(),
 
+                // ===== CHI NHÁNH =====
                 Branches = await _context.Branches
                     .Select(br => new BranchVM
                     {
                         BranchName = br.BranchName,
                         RoomCount = _context.Rooms.Count(r => r.BranchId == br.BranchId)
-                    }).ToListAsync(),
+                    })
+                    .ToListAsync(),
 
+                // ===== USER MỚI =====
                 NewUsers = await _context.Users
                     .OrderByDescending(u => u.UserId)
                     .Take(5)
@@ -84,11 +172,13 @@ namespace Booking_Hotel.Controllers
                     {
                         FullName = u.FullName,
                         Email = u.Email
-                    }).ToListAsync()
+                    })
+                    .ToListAsync()
             };
 
             return View(model);
         }
+
 
         private bool IsAdmin()
         {
