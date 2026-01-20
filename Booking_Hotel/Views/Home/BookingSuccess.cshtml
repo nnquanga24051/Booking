@@ -1,0 +1,103 @@
+﻿@model Booking_Hotel.Models.Booking
+
+@{
+    ViewData["Title"] = "Đặt Phòng Thành Công";
+}
+
+@section Styles {
+    <style>
+        .success-container {
+            max-width: 600px;
+            margin: 100px auto;
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .success-icon {
+            font-size: 80px;
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+
+        .success-title {
+            font-size: 32px;
+            color: #27ae60;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .success-message {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .booking-info {
+            text-align: left;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: #0066a1;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+            .back-btn:hover {
+                background: #004d7a;
+            }
+    </style>
+}
+
+<div class="success-container">
+    <div class="success-icon">✅</div>
+    <h1 class="success-title">Đặt Phòng Thành Công!</h1>
+    <p class="success-message">Cảm ơn quý khách đã đặt phòng tại Booking Hotel</p>
+
+    <div class="booking-info">
+        <h3 style="margin-bottom: 15px; color: #0066a1;">Thông tin đặt phòng:</h3>
+        <div class="info-row">
+            <span><strong>Mã đặt phòng:</strong></span>
+            <span>#@Model.BookingId</span>
+        </div>
+        <div class="info-row">
+            <span><strong>Phòng:</strong></span>
+            <span>@Model.Room?.RoomName</span>
+        </div>
+        <div class="info-row">
+            <span><strong>Chi nhánh:</strong></span>
+            <span>@Model.Room?.Branch?.BranchName</span>
+        </div>
+        <div class="info-row">
+            <span><strong>Ngày nhận phòng:</strong></span>
+            <span>@Model.CheckIn.ToString("dd/MM/yyyy")</span>
+        </div>
+        <div class="info-row">
+            <span><strong>Ngày trả phòng:</strong></span>
+            <span>@Model.CheckOut.ToString("dd/MM/yyyy")</span>
+        </div>
+        <div class="info-row">
+            <span><strong>Trạng thái:</strong></span>
+            <span style="color: #27ae60; font-weight: bold;">@Model.Status</span>
+        </div>
+    </div>
+
+    <a href="/Home/Index" class="back-btn">🏠 Về Trang Chủ</a>
+</div>

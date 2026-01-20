@@ -18,62 +18,105 @@
 
 <section class="booking-container">
     <div class="container">
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                ⚠️ @TempData["ErrorMessage"]
+            </div>
+        }
+
+        @if (Context.Session.GetInt32("UserId") == null)
+        {
+            <div style="background: #fff3cd; color: #856404; padding: 15px; border-radius: 5px; margin-bottom: 20px; text-align: center;">
+                ⚠️ Bạn cần <a href="/Authentications/Login" style="color: #0066a1; font-weight: bold;">đăng nhập</a> để có thể đặt phòng.
+                Chưa có tài khoản? <a href="/Authentications/Register" style="color: #0066a1; font-weight: bold;">Đăng ký ngay</a>
+            </div>
+        }
+
         <div class="booking-layout">
             <aside class="filter-sidebar">
                 <div class="filter-card">
                     <h3 class="filter-title">🔍 Bộ Lọc Tìm Kiếm</h3>
 
-                    <form id="filterForm" method="get">
+                    <form id="filterForm" method="get" action="/Home/Booking">
                         <div class="filter-group">
                             <label class="filter-label">📍 Chi Nhánh</label>
                             <select name="branch" class="filter-select">
                                 <option value="">Tất cả chi nhánh</option>
-                                @foreach (var b in ViewBag.Branches)
+                                @if (ViewBag.Branches != null)
                                 {
-                                    <option value="@b.BranchId">@b.BranchName</option>
+                                    foreach (var b in ViewBag.Branches)
+                                    {
+                                        <option value="@b.BranchId"
+                                                selected="@(ViewBag.SelectedBranch == b.BranchId.ToString() ? "selected" : null)">
+                                            @b.BranchName
+                                        </option>
+                                    }
                                 }
                             </select>
-
                         </div>
 
                         <div class="filter-group">
                             <label class="filter-label">🏨 Loại Phòng</label>
                             <select name="roomType" class="filter-select">
                                 <option value="">Tất cả loại phòng</option>
-                                <option value="Standard">Standard - Tiêu chuẩn</option>
-                                <option value="Deluxe">Deluxe - Cao cấp</option>
-                                <option value="Suite">Suite - VIP</option>
+                                <option value="Standard" selected="@(ViewBag.SelectedRoomType == "Standard" ? "selected" : null)">
+                                    Standard - Tiêu chuẩn
+                                </option>
+                                <option value="Deluxe" selected="@(ViewBag.SelectedRoomType == "Deluxe" ? "selected" : null)">
+                                    Deluxe - Cao cấp
+                                </option>
+                                <option value="Suite" selected="@(ViewBag.SelectedRoomType == "Suite" ? "selected" : null)">
+                                    Suite - VIP
+                                </option>
                             </select>
                         </div>
 
                         <div class="filter-group">
                             <label class="filter-label">📅 Ngày Nhận Phòng</label>
-                            <input type="date" name="checkin" class="filter-input" />
+                            <input type="date" name="checkin" class="filter-input"
+                                   value="@ViewBag.SelectedCheckin"
+                                   min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                         </div>
 
                         <div class="filter-group">
                             <label class="filter-label">📅 Ngày Trả Phòng</label>
-                            <input type="date" name="checkout" class="filter-input" />
+                            <input type="date" name="checkout" class="filter-input"
+                                   value="@ViewBag.SelectedCheckout"
+                                   min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" />
                         </div>
 
                         <div class="filter-group">
                             <label class="filter-label">💰 Khoảng Giá (VNĐ)</label>
                             <div class="price-inputs">
-                                <input type="number" name="minPrice" placeholder="Từ" class="filter-input" />
+                                <input type="number" name="minPrice" placeholder="Từ"
+                                       class="filter-input"
+                                       value="@ViewBag.SelectedMinPrice"
+                                       step="100000" />
                                 <span class="price-separator">-</span>
-                                <input type="number" name="maxPrice" placeholder="Đến" class="filter-input" />
+                                <input type="number" name="maxPrice" placeholder="Đến"
+                                       class="filter-input"
+                                       value="@ViewBag.SelectedMaxPrice"
+                                       step="100000" />
                             </div>
                         </div>
 
                         <div class="filter-group">
                             <label class="filter-label">📊 Trạng Thái</label>
                             <div class="checkbox-group">
+                                @{
+                                    var selectedStatus = ViewBag.SelectedStatus as string[] ?? new string[] { "available" };
+                                    bool availableChecked = selectedStatus.Contains("available") || selectedStatus.Length == 0;
+                                    bool maintenanceChecked = selectedStatus.Contains("maintenance");
+                                }
                                 <label class="checkbox-label">
-                                    <input type="checkbox" name="status" value="available" checked />
+                                    <input type="checkbox" name="status" value="available"
+                                           @(availableChecked ? "checked" : "") />
                                     <span>Còn trống</span>
                                 </label>
                                 <label class="checkbox-label">
-                                    <input type="checkbox" name="status" value="maintenance" />
+                                    <input type="checkbox" name="status" value="maintenance"
+                                           @(maintenanceChecked ? "checked" : "") />
                                     <span>Bảo trì</span>
                                 </label>
                             </div>
@@ -83,9 +126,9 @@
                             <button type="submit" class="filter-btn primary">
                                 🔍 Tìm Kiếm
                             </button>
-                            <button type="reset" class="filter-btn secondary">
+                            <a href="/Home/Booking" class="filter-btn secondary" style="text-decoration: none; text-align: center;">
                                 🔄 Đặt Lại
-                            </button>
+                            </a>
                         </div>
                     </form>
                 </div>
@@ -103,7 +146,7 @@
 
             <main class="rooms-section">
                 <div class="section-header-bar">
-                    <h2 class="section-title">Danh Sách Phòng</h2>
+                    <h2 class="section-title">Danh Sách Phòng (@Model.Count phòng)</h2>
                     <div class="sort-controls">
                         <label for="sortBy">Sắp xếp:</label>
                         <select id="sortBy" class="sort-select">
@@ -114,216 +157,131 @@
                         </select>
                     </div>
                 </div>
-                <div class="rooms-list">
-                    @foreach (var room in Model)
-                    {
-                        <div class="room-item">
-                            <div class="room-image-wrapper">
-                                <img src="@room.ImageUrl"
-                                     onerror="this.src='https://via.placeholder.com/350x250/0066a1/ffffff?text=Room'"
-                                     class="room-image" />
 
-                                <span class="room-status @(room.Status == "Available" ? "available" : "maintenance")">
-                                    @(room.Status == "Available" ? "Còn Trống" : "Bảo Trì")
-                                </span>
-                            </div>
+                @if (Model != null && Model.Count > 0)
+                {
+                    <div class="rooms-list" id="roomsList">
+                        @foreach (var room in Model)
+                        {
+                            <div class="room-item" data-price="@room.Price" data-name="@room.RoomName">
+                                <div class="room-image-wrapper">
+                                    <img src="@room.ImageUrl"
+                                         onerror="this.src='https://via.placeholder.com/350x250/0066a1/ffffff?text=@room.RoomName'"
+                                         class="room-image" />
 
-                            <div class="room-details">
-                                <div class="room-header-section">
-                                    <h3 class="room-title">@room.RoomName</h3>
-                                    <span class="room-location">📍 @room.Branch?.BranchName</span>
+                                    <span class="room-status @(room.Status == "Available" ? "available" : "maintenance")">
+                                        @(room.Status == "Available" ? "Còn Trống" : "Bảo Trì")
+                                    </span>
                                 </div>
 
-                                <p class="room-category">
-                                    🏨 @room.RoomType
-                                </p>
-
-                                <p class="room-desc">
-                                    Sức chứa: @room.Capacity người
-                                </p>
-
-                                <div class="room-bottom">
-                                    <div class="room-pricing">
-                                        <span class="price-per-night">Giá/đêm:</span>
-                                        <span class="price-amount">
-                                            @room.Price.ToString("N0")₫
-                                        </span>
+                                <div class="room-details">
+                                    <div class="room-header-section">
+                                        <h3 class="room-title">@room.RoomName</h3>
+                                        <span class="room-location">📍 @room.Branch?.BranchName</span>
                                     </div>
 
-                                    @if (room.Status == "Available")
-                                    {
-                                        <a href="/Home/BookingDetails?roomId=@room.RoomId"
-                                           class="booking-btn">
-                                            Đặt Phòng Ngay
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <button class="booking-btn disabled" disabled>
-                                            Không Khả Dụng
-                                        </button>
-                                    }
+                                    <p class="room-category">
+                                        @if (room.RoomType == "Standard")
+                                        {
+                                            <text>🏨 Standard - Tiêu Chuẩn</text>
+                                        }
+                                        else if (room.RoomType == "Deluxe")
+                                        {
+                                            <text>⭐ Deluxe - Cao Cấp</text>
+                                        }
+                                        else if (room.RoomType == "Suite")
+                                        {
+                                            <text>💎 Suite - VIP</text>
+                                        }
+                                    </p>
+
+                                    <p class="room-desc">
+                                        👥 Sức chứa: @room.Capacity người
+                                    </p>
+
+                                    <div class="room-bottom">
+                                        <div class="room-pricing">
+                                            <span class="price-per-night">Giá/đêm:</span>
+                                            <span class="price-amount">
+                                                @room.Price.ToString("N0")₫
+                                            </span>
+                                        </div>
+
+                                        @if (room.Status == "Available")
+                                        {
+                                            <a href="/Home/BookingDetails?roomId=@room.RoomId"
+                                               class="booking-btn">
+                                                Đặt Phòng Ngay
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <button class="booking-btn disabled" disabled>
+                                                Không Khả Dụng
+                                            </button>
+                                        }
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    }
-                </div>
-
-
-                    <div class="room-item">
-                        <div class="room-image-wrapper">
-                            <img src="/images/rooms/102.jpg"
-                                 alt="Phòng Deluxe 102"
-                                 onerror="this.src='https://via.placeholder.com/350x250/0066a1/ffffff?text=Phòng+102'"
-                                 class="room-image" />
-                            <span class="room-status available">Còn Trống</span>
-                        </div>
-                        <div class="room-details">
-                            <div class="room-header-section">
-                                <h3 class="room-title">Phòng Deluxe 102</h3>
-                                <span class="room-location">📍 Cần Thơ</span>
-                            </div>
-                            <p class="room-category">⭐ Deluxe - Cao Cấp</p>
-                            <p class="room-desc">Phòng cao cấp với view đẹp, không gian rộng rãi và thoải mái</p>
-
-                            <div class="room-amenities">
-                                <span class="amenity">🛏️ 1 Giường King</span>
-                                <span class="amenity">📺 Smart TV</span>
-                                <span class="amenity">❄️ Điều hòa</span>
-                                <span class="amenity">🛁 Bồn tắm</span>
-                            </div>
-
-                            <div class="room-bottom">
-                                <div class="room-pricing">
-                                    <span class="price-per-night">Giá/đêm:</span>
-                                    <span class="price-amount">700,000₫</span>
-                                </div>
-                                <a href="/Home/BookingDetails?roomId=2" class="booking-btn">
-                                    Đặt Phòng Ngay
-                                </a>
-                            </div>
-                        </div>
+                        }
                     </div>
-
-                    <div class="room-item">
-                        <div class="room-image-wrapper">
-                            <img src="/images/rooms/201.jpg"
-                                 alt="Phòng Standard 201"
-                                 onerror="this.src='https://via.placeholder.com/350x250/ff9800/ffffff?text=Bảo+Trì'"
-                                 class="room-image maintenance-img" />
-                            <span class="room-status maintenance">Bảo Trì</span>
-                        </div>
-                        <div class="room-details">
-                            <div class="room-header-section">
-                                <h3 class="room-title">Phòng Standard 201</h3>
-                                <span class="room-location">📍 TP.HCM</span>
-                            </div>
-                            <p class="room-category">🏨 Standard - Tiêu Chuẩn</p>
-                            <p class="room-desc">Đang trong quá trình bảo trì và nâng cấp tiện nghi</p>
-
-                            <div class="room-amenities">
-                                <span class="amenity">🛏️ 1 Giường đôi</span>
-                                <span class="amenity">📺 TV</span>
-                                <span class="amenity">❄️ Điều hòa</span>
-                                <span class="amenity">🚿 Phòng tắm</span>
-                            </div>
-
-                            <div class="room-bottom">
-                                <div class="room-pricing">
-                                    <span class="price-per-night">Giá/đêm:</span>
-                                    <span class="price-amount">600,000₫</span>
-                                </div>
-                                <button class="booking-btn disabled" disabled>
-                                    Không Khả Dụng
-                                </button>
-                            </div>
-                        </div>
+                }
+                else
+                {
+                    <div style="text-align: center; padding: 50px; background: white; border-radius: 10px; margin-top: 20px;">
+                        <h3 style="color: #666;">😔 Không tìm thấy phòng phù hợp</h3>
+                        <p style="color: #999;">Vui lòng thử lại với các tiêu chí tìm kiếm khác</p>
+                        <a href="/Home/Booking" style="display: inline-block; margin-top: 15px; padding: 10px 30px; background: #0066a1; color: white; text-decoration: none; border-radius: 5px;">
+                            Xem tất cả phòng
+                        </a>
                     </div>
-
-                    <div class="room-item">
-                        <div class="room-image-wrapper">
-                            <img src="/images/rooms/202.jpg"
-                                 alt="Phòng Deluxe 202"
-                                 onerror="this.src='https://via.placeholder.com/350x250/0066a1/ffffff?text=Phòng+202'"
-                                 class="room-image" />
-                            <span class="room-status available">Còn Trống</span>
-                        </div>
-                        <div class="room-details">
-                            <div class="room-header-section">
-                                <h3 class="room-title">Phòng Deluxe 202</h3>
-                                <span class="room-location">📍 TP.HCM</span>
-                            </div>
-                            <p class="room-category">⭐ Deluxe - Cao Cấp</p>
-                            <p class="room-desc">Phòng sang trọng tại trung tâm Quận 1 với đầy đủ tiện nghi</p>
-
-                            <div class="room-amenities">
-                                <span class="amenity">🛏️ 1 Giường King</span>
-                                <span class="amenity">📺 Smart TV</span>
-                                <span class="amenity">❄️ Điều hòa</span>
-                                <span class="amenity">🛁 Bồn tắm</span>
-                            </div>
-
-                            <div class="room-bottom">
-                                <div class="room-pricing">
-                                    <span class="price-per-night">Giá/đêm:</span>
-                                    <span class="price-amount">800,000₫</span>
-                                </div>
-                                <a href="/Home/BookingDetails?roomId=4" class="booking-btn">
-                                    Đặt Phòng Ngay
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="room-item">
-                        <div class="room-image-wrapper">
-                            <img src="/images/rooms/301.jpg"
-                                 alt="Phòng Suite 301"
-                                 onerror="this.src='https://via.placeholder.com/350x250/0066a1/ffffff?text=VIP+301'"
-                                 class="room-image" />
-                            <span class="room-status available">Còn Trống</span>
-                            <span class="room-badge-vip">VIP</span>
-                        </div>
-                        <div class="room-details">
-                            <div class="room-header-section">
-                                <h3 class="room-title">Phòng Suite 301</h3>
-                                <span class="room-location">📍 Hà Nội</span>
-                            </div>
-                            <p class="room-category">💎 Suite - VIP</p>
-                            <p class="room-desc">Phòng VIP cao cấp nhất với không gian sang trọng và đẳng cấp</p>
-
-                            <div class="room-amenities">
-                                <span class="amenity">🛏️ 2 Giường King</span>
-                                <span class="amenity">📺 Smart TV 4K</span>
-                                <span class="amenity">❄️ Điều hòa 2 chiều</span>
-                                <span class="amenity">🛁 Jacuzzi</span>
-                            </div>
-
-                            <div class="room-bottom">
-                                <div class="room-pricing">
-                                    <span class="price-per-night">Giá/đêm:</span>
-                                    <span class="price-amount">1,000,000₫</span>
-                                </div>
-                                <a href="/Home/BookingDetails?roomId=5" class="booking-btn">
-                                    Đặt Phòng Ngay
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pagination">
-                    <button class="page-btn disabled" disabled>« Trước</button>
-                    <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">3</button>
-                    <button class="page-btn">Sau »</button>
-                </div>
+                }
             </main>
         </div>
     </div>
 </section>
 
 @section Scripts {
-    <script src="~/js/booking.js" asp-append-version="true"></script>
+    <script>
+        // Sort functionality
+        document.getElementById('sortBy').addEventListener('change', function() {
+            const sortValue = this.value;
+            const roomsList = document.getElementById('roomsList');
+            const rooms = Array.from(roomsList.querySelectorAll('.room-item'));
+
+            rooms.sort((a, b) => {
+                switch(sortValue) {
+                    case 'price-asc':
+                        return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+                    case 'price-desc':
+                        return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+                    case 'name':
+                        return a.dataset.name.localeCompare(b.dataset.name);
+                    default:
+                        return 0;
+                }
+            });
+
+            // Re-append sorted rooms
+            rooms.forEach(room => roomsList.appendChild(room));
+        });
+
+        // Update checkout min date when checkin changes
+        const checkinInput = document.querySelector('input[name="checkin"]');
+        const checkoutInput = document.querySelector('input[name="checkout"]');
+
+        if (checkinInput && checkoutInput) {
+            checkinInput.addEventListener('change', function() {
+                const checkinDate = new Date(this.value);
+                const minCheckout = new Date(checkinDate);
+                minCheckout.setDate(minCheckout.getDate() + 1);
+                checkoutInput.min = minCheckout.toISOString().split('T')[0];
+
+                // Reset checkout if it's before new min
+                if (checkoutInput.value && new Date(checkoutInput.value) <= checkinDate) {
+                    checkoutInput.value = '';
+                }
+            });
+        }
+    </script>
 }
